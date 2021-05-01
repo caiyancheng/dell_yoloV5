@@ -1,0 +1,7 @@
+train: ./data/cityscapes/images/train_fog
+#val: ./data/cityscapes/images/val_fog
+val: ./data/cityscapes/images/val_fog
+#不需要什么.txt文件
+nc: 1
+
+names: ['pedestrain']
