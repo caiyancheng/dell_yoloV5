@@ -1,0 +1,26 @@
+ssh://root@10.154.63.42:38301/usr/local/miniconda3/envs/yolov5/bin/python -u /remote-home/source/42/cyc19307140030/dellyolo/test.py
+Namespace(augment=False, batch_size=48, conf_thres=0.001, data='data/dell.yaml', device='', exist_ok=False, img_size=640, iou_thres=0.6, name='exp', project='runs/test', save_conf=False, save_hybrid=False, save_json=False, save_txt=False, single_cls=False, task='val', verbose=False, weights='./runs/train/exp6/weights/best.pt')
+YOLOv5 🚀 2021-4-7 torch 1.7.1 CUDA:0 (GeForce RTX 2080 Ti, 10989.4375MB)
+                              CUDA:1 (GeForce RTX 2080 Ti, 10989.4375MB)
+
+Fusing layers... 
+Model Summary: 308 layers, 21041679 parameters, 0 gradients, 50.3 GFLOPS
+val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
+val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
+
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+               Class      Images      Labels           P           R      mAP@.5
+                 all         412         412       0.997       0.998       0.997       0.899
+              cancel         412         226           1       0.996       0.997       0.891
+               limit         412         186       0.995           1       0.997       0.908
+Speed: 2.7/2.3/5.0 ms inference/NMS/total per 640x640 image at batch-size 48
+Results saved to runs/test/exp4
+
+Process finished with exit code 0
