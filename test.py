@@ -97,9 +97,15 @@ def test(data,
     p, r, f1, mp, mr, map50, map, t0, t1 = 0., 0., 0., 0., 0., 0., 0., 0., 0.
     loss = torch.zeros(3, device=device)
     jdict, stats, ap, ap_class, wandb_images = [], [], [], [], []
+    right_pred=0
     for batch_i, (img, targets, paths, shapes) in enumerate(tqdm(dataloader, desc=s)):
         img = img.to(device, non_blocking=True)
         img = img.half() if half else img.float()  # uint8 to fp16/32
+        imgnp=img[0].np()
+        imgnp=imgnp.squeeze()
+        imgnp=imgnp.transpose(1, 2, 0)
+
+
         img /= 255.0  # 0 - 255 to 0.0 - 1.0
         targets = targets.to(device)
         nb, _, height, width = img.shape  # batch size, channels, height, width
@@ -286,6 +292,8 @@ def test(data,
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
     parser.add_argument('--weights', nargs='+', type=str, default='./runs/dell_train/exp7/weights/best.pt', help='model.pt path(s)')
+    # parser.add_argument('--weights', nargs='+', type=str, default='./runs/train_crossdomain/exp9/weights/best.pt',
+    #                     help='model.pt path(s)')
     parser.add_argument('--data', type=str, default='data/dell.yaml', help='*.data path')
     parser.add_argument('--batch-size', type=int, default=48, help='size of each image batch')
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
@@ -311,9 +319,9 @@ if __name__ == '__main__':
 
     if opt.task in ('train', 'val', 'test'):  # run normally
         test(opt.data,
-             opt.weights,
-             opt.batch_size,
-             opt.img_size,
+             opt.weights,#'./runs/dell_train/exp7/weights/best.pt'
+             opt.batch_size,#480
+             opt.img_size,#640
              opt.conf_thres,
              opt.iou_thres,
              opt.save_json,

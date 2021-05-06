@@ -34,12 +34,12 @@ from utils.loss import ComputeLoss
 from utils.plots import plot_images, plot_labels, plot_results, plot_evolution
 from utils.torch_utils import ModelEMA, select_device, intersect_dicts, torch_distributed_zero_first, is_parallel
 from utils.wandb_logging.wandb_utils import WandbLogger, check_wandb_resume
-# from domain_ad import *
-# from discriminator import *
+from domain_ad import *
+from discriminator import *
 
 logger = logging.getLogger(__name__)
 
-TRAIN_LEARNING_RATE_D=1e-4
+TRAIN_LEARNING_RATE_D=1e-5
 TRAIN_EARLY_STOP=3000
 TRAIN_MAX_ITERS=6000
 TRAIN_POWER=0.9
@@ -304,22 +304,22 @@ def train(hyp, opt, device, tb_writer=None):
                 f'Starting training for {epochs} epochs...')
 
     #########################################################cyc
-    d_first = get_fc_discriminator(num_classes=192)
+    d_first = get_fc_discriminator(num_classes=320)
     d_first.train()
     d_first.to(device)
 
     if ADD==1:
-        d_first_add = get_fc_discriminator_add(num_classes=192)
+        d_first_add = get_fc_discriminator_add(num_classes=320)
         d_first_add.train()
         d_first_add.to(device)
 
     if TRAIN_LAYER>1:
-        d_second = get_fc_discriminator(num_classes=384)
+        d_second = get_fc_discriminator(num_classes=640)
         d_second.train()
         d_second.to(device)
 
     if TRAIN_LAYER>2:
-        d_third = get_fc_discriminator(num_classes=768)
+        d_third = get_fc_discriminator(num_classes=1280)
         d_third.train()
         d_third.to(device)
 
@@ -733,10 +733,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str, default='./runs/dell_train/exp7/weights/best.pt', help='initial weights path')#哪种yolo结构？
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')#参考.yaml文件
-    parser.add_argument('--data', type=str, default='data/cityperson.yaml', help='data.yaml path')#数据集目录
+    parser.add_argument('--data', type=str, default='data/dell.yaml', help='data.yaml path')#数据集目录
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.yaml', help='hyperparameters path')#超参们
-    parser.add_argument('--epochs', type=int, default=15)#几个epoch?
-    parser.add_argument('--batch-size', type=int, default=16, help='total batch size for all GPUs')#batchsize
+    parser.add_argument('--epochs', type=int, default=2)#几个epoch?
+    parser.add_argument('--batch-size', type=int, default=6, help='total batch size for all GPUs')#batchsize
     parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='[train, test] image sizes')#切割
     parser.add_argument('--rect',action='store_true',default=False, help='rectangular training')
     parser.add_argument('--resume', nargs='?', const=True, default=False, help='resume most recent training')
