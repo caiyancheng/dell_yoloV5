@@ -1,8 +1,8 @@
 #train: ./data/dell/images/train_alldata_simple
-train: ./data/dell/images/train_all_data
-#train: ./data/dell/images/train_simple
+#train: ./data/dell/images/train_all_data
+train: ./data/dell/images/train_simple
 #val: ./data/cityscapes/images/val_fog
-val: ./data/dell/images/val_alldata_simple
+val: ./data/dell/images/val_alldata_simple #
 #val: ./data/dell/images/gantrain_second_domain
 #不需要什么.txt文件
 target_train: ./data/dell/images/gantrain_second_domain

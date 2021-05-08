@@ -1,0 +1,828 @@
+ssh://root@10.154.63.46:20102/usr/local/miniconda3/envs/yoloV5/bin/python -u /remote-home/source/42/cyc19307140030/dellyolo/train_UDA_single_low.py
+github: skipping check (not a git repository)
+YOLOv5 🚀 2021-4-7 torch 1.7.1 CUDA:0 (GeForce RTX 2080 Ti, 10989.4375MB)
+                              CUDA:1 (GeForce RTX 2080 Ti, 10989.4375MB)
+                              CUDA:2 (GeForce RTX 2080 Ti, 10989.4375MB)
+                              CUDA:3 (GeForce RTX 2080 Ti, 10989.4375MB)
+
+Namespace(adam=False, artifact_alias='latest', batch_size=8, bbox_interval=-1, bucket='', cache_images=False, cfg='', data='data/dell.yaml', device='', entity=None, epochs=10, evolve=False, exist_ok=False, global_rank=-1, hyp='data/hyp.scratch.yaml', image_weights=False, img_size=[640, 640], label_smoothing=0.0, linear_lr=False, local_rank=-1, multi_scale=False, name='exp', noautoanchor=False, nosave=False, notest=False, project='runs/train_crossdomain', quad=False, rect=False, resume=False, save_dir='runs/train_crossdomain/exp17', save_period=-1, single_cls=False, sync_bn=False, total_batch_size=8, upload_dataset=False, weights='./runs/dell_train_final/exp17/weights/best.pt', workers=8, world_size=1)
+tensorboard: Start with 'tensorboard --logdir runs/train_crossdomain', view at http://localhost:6006/
+hyperparameters: lr0=0.001, lrf=0.2, momentum=0.937, weight_decay=0.0005, warmup_epochs=3.0, warmup_momentum=0.8, warmup_bias_lr=0.1, box=0.05, cls=0.5, cls_pw=1.0, obj=1.0, obj_pw=1.0, iou_t=0.2, anchor_t=4.0, fl_gamma=0.0, hsv_h=0.015, hsv_s=0.7, hsv_v=0.4, degrees=0.0, translate=0.1, scale=0.5, shear=0.0, perspective=0.0, flipud=0.0, fliplr=0.5, mosaic=1.0, mixup=0.0
+wandb: Currently logged in as: caiyancheng (use `wandb login --relogin` to force relogin)
+wandb: wandb version 0.10.30 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.10.29
+wandb: Syncing run exp17
+wandb: ⭐️ View project at https://wandb.ai/caiyancheng/train_crossdomain
+wandb: 🚀 View run at https://wandb.ai/caiyancheng/train_crossdomain/runs/vyofqxmn
+wandb: Run data is saved locally in /remote-home/source/42/cyc19307140030/dellyolo/wandb/run-20210508_113633-vyofqxmn
+wandb: Run `wandb offline` to turn off syncing.
+
+
+                 from  n    params  module                                  arguments                     
+  0                -1  1      8800  models.common.Focus                     [3, 80, 3]                    
+  1                -1  1    115520  models.common.Conv                      [80, 160, 3, 2]               
+  2                -1  1    309120  models.common.C3                        [160, 160, 4]                 
+  3                -1  1    461440  models.common.Conv                      [160, 320, 3, 2]              
+  4                -1  1   3285760  models.common.C3                        [320, 320, 12]                
+  5                -1  1   1844480  models.common.Conv                      [320, 640, 3, 2]              
+  6                -1  1  13125120  models.common.C3                        [640, 640, 12]                
+  7                -1  1   7375360  models.common.Conv                      [640, 1280, 3, 2]             
+  8                -1  1   4099840  models.common.SPP                       [1280, 1280, [5, 9, 13]]      
+  9                -1  1  19676160  models.common.C3                        [1280, 1280, 4, False]        
+ 10                -1  1    820480  models.common.Conv                      [1280, 640, 1, 1]             
+ 11                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
+ 12           [-1, 6]  1         0  models.common.Concat                    [1]                           
+ 13                -1  1   5332480  models.common.C3                        [1280, 640, 4, False]         
+ 14                -1  1    205440  models.common.Conv                      [640, 320, 1, 1]              
+ 15                -1  1         0  torch.nn.modules.upsampling.Upsample    [None, 2, 'nearest']          
+ 16           [-1, 4]  1         0  models.common.Concat                    [1]                           
+ 17                -1  1   1335040  models.common.C3                        [640, 320, 4, False]          
+ 18                -1  1    922240  models.common.Conv                      [320, 320, 3, 2]              
+ 19          [-1, 14]  1         0  models.common.Concat                    [1]                           
+ 20                -1  1   4922880  models.common.C3                        [640, 640, 4, False]          
+ 21                -1  1   3687680  models.common.Conv                      [640, 640, 3, 2]              
+ 22          [-1, 10]  1         0  models.common.Concat                    [1]                           
+ 23                -1  1  19676160  models.common.C3                        [1280, 1280, 4, False]        
+ 24      [17, 20, 23]  1     47103  models.yolo.Detect                      [2, [[10, 13, 16, 30, 33, 23], [30, 61, 62, 45, 59, 119], [116, 90, 156, 198, 373, 326]], [320, 640, 1280]]
+Model Summary: 607 layers, 87251103 parameters, 87251103 gradients, 217.3 GFLOPS
+
+Transferred 794/794 items from ./runs/dell_train_final/exp17/weights/best.pt
+Scaled weight_decay = 0.0005
+Optimizer groups: 134 .bias, 134 conv.weight, 131 other
+train: Scanning 'data/dell/labels/train_simple.cache' images and labels... 1575 
+target_train: Scanning 'data/dell/labels/gantrain_second_domain.cache' images an
+val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
+target_val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labe
+Plotting labels... 
+
+autoanchor: Analyzing anchors... anchors/target = 6.46, Best Possible Recall (BPR) = 1.0000
+Image sizes 640 train, 640 test
+Using 8 dataloader workers
+Logging results to runs/train_crossdomain/exp17
+Starting training for 10 epochs...
+
+     Epoch   gpu_mem       box       obj       cls     total    labels  img_size
+  0%|                                                   | 0/197 [00:00<?, ?it/s]
+it:0  loss_yolo:   0.08936  FOOL:loss_adv_trg_first: 0.0001286  loss_adv_trg_second: 4.262e-06 DISTARGET:loss_d_first:    0.4982  loss_d_second:    0.5003
+       0/9     5.72G  0.009488  0.001639 4.354e-05   0.01117         8       640
+it:1  loss_yolo:   0.08767  FOOL:loss_adv_trg_first:    0.0768  loss_adv_trg_second:   0.01467 DISTARGET:loss_d_first:    0.2648  loss_d_second:    0.3863
+       0/9     5.75G  0.008804  0.002209 5.113e-05   0.01106        16       640
+it:2  loss_yolo:    0.0905  FOOL:loss_adv_trg_first:    0.8953  loss_adv_trg_second:    0.2113 DISTARGET:loss_d_first:   0.01102  loss_d_second:    0.1464
+       0/9     5.75G   0.00857  0.002385 0.0001917   0.01115        14       640
+it:3  loss_yolo:    0.1008  FOOL:loss_adv_trg_first:    0.2303  loss_adv_trg_second:     1.353 DISTARGET:loss_d_first:    0.1391  loss_d_second:    0.0141
+       0/9     5.75G  0.008461   0.00289 0.0001597   0.01151        17       640
+it:4  loss_yolo:    0.1229  FOOL:loss_adv_trg_first:   0.07162  loss_adv_trg_second:    0.3502 DISTARGET:loss_d_first:    0.2696  loss_d_second:   0.08405
+       0/9     5.75G  0.009059  0.002938 0.0002841   0.01228        13       640
+it:5  loss_yolo:   0.06929  FOOL:loss_adv_trg_first:   0.04253  loss_adv_trg_second:   0.09338 DISTARGET:loss_d_first:    0.3167  loss_d_second:    0.2417
+       0/9     5.75G  0.008615  0.002818 0.0002449   0.01168        13       640
+it:6  loss_yolo:    0.1061  FOOL:loss_adv_trg_first:   0.04315  loss_adv_trg_second:    0.0337 DISTARGET:loss_d_first:    0.3152  loss_d_second:     0.334
+       0/9     5.75G  0.008745  0.002919 0.0002385    0.0119        14       640
+it:7  loss_yolo:    0.1031  FOOL:loss_adv_trg_first:   0.06971  loss_adv_trg_second:   0.01934 DISTARGET:loss_d_first:    0.2724  loss_d_second:    0.3711
+       0/9     5.75G  0.008819  0.002992 0.0002158   0.01203        14       640
+it:8  loss_yolo:    0.1208  FOOL:loss_adv_trg_first:    0.1334  loss_adv_trg_second:   0.01726 DISTARGET:loss_d_first:    0.2031  loss_d_second:    0.3774
+       0/9     5.75G  0.008958  0.003178 0.0002315   0.01237        17       640
+it:9  loss_yolo:    0.0818  FOOL:loss_adv_trg_first:    0.2732  loss_adv_trg_second:   0.02055 DISTARGET:loss_d_first:    0.1154  loss_d_second:    0.3673
+       0/9     5.75G  0.008905  0.003033 0.0002155   0.01215        11       640
+it:10  loss_yolo:    0.1069  FOOL:loss_adv_trg_first:    0.5213  loss_adv_trg_second:   0.03654 DISTARGET:loss_d_first:    0.0427  loss_d_second:    0.3279
+       0/9     5.75G  0.008976  0.003086 0.0002012   0.01226        18       640
+it:11  loss_yolo:   0.07764  FOOL:loss_adv_trg_first:    0.4086  loss_adv_trg_second:    0.0763 DISTARGET:loss_d_first:   0.06702  loss_d_second:    0.2626
+       0/9     5.75G  0.008825  0.003035 0.0001899   0.01205        13       640
+it:12  loss_yolo:   0.08285  FOOL:loss_adv_trg_first:    0.2631  loss_adv_trg_second:    0.1824 DISTARGET:loss_d_first:    0.1211  loss_d_second:    0.1655
+       0/9     5.75G  0.008724  0.003014 0.0001817   0.01192        17       640
+it:13  loss_yolo:   0.07939  FOOL:loss_adv_trg_first:    0.1839  loss_adv_trg_second:    0.4528 DISTARGET:loss_d_first:    0.1643  loss_d_second:   0.05423
+       0/9     5.75G  0.008677  0.002915 0.0001852   0.01178        10       640
+it:14  loss_yolo:    0.1322  FOOL:loss_adv_trg_first:    0.1444  loss_adv_trg_second:    0.5118 DISTARGET:loss_d_first:    0.1945  loss_d_second:   0.04271
+       0/9     5.75G  0.008752  0.002913 0.0004294   0.01209        16       640
+it:15  loss_yolo:    0.1201  FOOL:loss_adv_trg_first:    0.1236  loss_adv_trg_second:    0.4036 DISTARGET:loss_d_first:    0.2118  loss_d_second:   0.06733
+       0/9     5.75G  0.008942  0.002911 0.0004234   0.01228        11       640
+it:16  loss_yolo:   0.09507  FOOL:loss_adv_trg_first:    0.1501  loss_adv_trg_second:    0.2496 DISTARGET:loss_d_first:    0.1897  loss_d_second:    0.1263
+       0/9     5.75G  0.008995  0.002854 0.0004034   0.01225        10       640
+it:17  loss_yolo:   0.09503  FOOL:loss_adv_trg_first:    0.1898  loss_adv_trg_second:    0.1685 DISTARGET:loss_d_first:    0.1619  loss_d_second:     0.175
+       0/9     5.75G  0.008979  0.002865 0.0003886   0.01223        19       640
+it:18  loss_yolo:    0.1059  FOOL:loss_adv_trg_first:    0.2363  loss_adv_trg_second:     0.133 DISTARGET:loss_d_first:    0.1334  loss_d_second:    0.2026
+       0/9     5.75G  0.009086  0.002827 0.0003717   0.01228        10       640
+it:19  loss_yolo:    0.1131  FOOL:loss_adv_trg_first:    0.3027  loss_adv_trg_second:    0.1187 DISTARGET:loss_d_first:    0.1033  loss_d_second:    0.2162
+       0/9     5.75G  0.009181  0.002841 0.0003555   0.01238         9       640
+it:20  loss_yolo:    0.1027  FOOL:loss_adv_trg_first:    0.3407  loss_adv_trg_second:    0.1225 DISTARGET:loss_d_first:   0.08814  loss_d_second:    0.2124
+       0/9     5.75G  0.009207  0.002852  0.000341    0.0124        15       640
+it:21  loss_yolo:    0.1013  FOOL:loss_adv_trg_first:    0.3708  loss_adv_trg_second:    0.1583 DISTARGET:loss_d_first:   0.07922  loss_d_second:    0.1815
+       0/9     5.75G  0.009203   0.00284 0.0003676   0.01241        14       640
+it:22  loss_yolo:    0.1021  FOOL:loss_adv_trg_first:    0.3266  loss_adv_trg_second:    0.2269 DISTARGET:loss_d_first:   0.09349  loss_d_second:    0.1386
+       0/9     5.75G  0.009182  0.002842 0.0004024   0.01243        11       640
+it:23  loss_yolo:   0.08195  FOOL:loss_adv_trg_first:    0.2735  loss_adv_trg_second:    0.3237 DISTARGET:loss_d_first:    0.1176  loss_d_second:   0.09498
+       0/9     5.75G  0.009129  0.002819 0.0003878   0.01234        10       640
+it:24  loss_yolo:   0.09858  FOOL:loss_adv_trg_first:    0.2305  loss_adv_trg_second:    0.4044 DISTARGET:loss_d_first:    0.1383  loss_d_second:   0.06856
+       0/9     5.75G  0.009147  0.002813 0.0003746   0.01233        15       640
+it:25  loss_yolo:    0.1006  FOOL:loss_adv_trg_first:    0.1747  loss_adv_trg_second:    0.3781 DISTARGET:loss_d_first:    0.1732  loss_d_second:   0.07455
+       0/9     5.75G  0.009124  0.002858 0.0003625   0.01234        18       640
+it:26  loss_yolo:       0.1  FOOL:loss_adv_trg_first:     0.197  loss_adv_trg_second:    0.3813 DISTARGET:loss_d_first:    0.1589  loss_d_second:   0.07549
+       0/9     5.75G  0.009155  0.002841 0.0003543   0.01235        11       640
+it:27  loss_yolo:    0.1095  FOOL:loss_adv_trg_first:     0.171  loss_adv_trg_second:    0.2604 DISTARGET:loss_d_first:    0.1759  loss_d_second:    0.1204
+       0/9     5.75G  0.009164  0.002879 0.0003552    0.0124        16       640
+it:28  loss_yolo:   0.07128  FOOL:loss_adv_trg_first:    0.1976  loss_adv_trg_second:    0.2342 DISTARGET:loss_d_first:    0.1587  loss_d_second:     0.136
+       0/9     5.75G  0.009096  0.002837 0.0003448   0.01228        10       640
+it:29  loss_yolo:   0.07471  FOOL:loss_adv_trg_first:    0.2742  loss_adv_trg_second:     0.231 DISTARGET:loss_d_first:    0.1158  loss_d_second:    0.1354
+       0/9     5.75G  0.009032   0.00281 0.0003379   0.01218         9       640
+it:30  loss_yolo:   0.07741  FOOL:loss_adv_trg_first:    0.2883  loss_adv_trg_second:    0.1707 DISTARGET:loss_d_first:    0.1119  loss_d_second:    0.1767
+       0/9     5.75G  0.008979  0.002788 0.0003325    0.0121        11       640
+it:31  loss_yolo:   0.07748  FOOL:loss_adv_trg_first:    0.3493  loss_adv_trg_second:    0.1871 DISTARGET:loss_d_first:   0.08598  loss_d_second:    0.1642
+       0/9     5.75G  0.008924  0.002776 0.0003239   0.01202        11       640
+it:32  loss_yolo:   0.09557  FOOL:loss_adv_trg_first:     0.325  loss_adv_trg_second:    0.2105 DISTARGET:loss_d_first:    0.0956  loss_d_second:    0.1535
+       0/9     5.75G  0.008928  0.002774 0.0003198   0.01202        12       640
+it:33  loss_yolo:    0.1177  FOOL:loss_adv_trg_first:    0.3057  loss_adv_trg_second:    0.2029 DISTARGET:loss_d_first:    0.1024  loss_d_second:    0.1583
+       0/9     5.75G  0.009003  0.002784 0.0003138    0.0121        11       640
+it:34  loss_yolo:   0.07341  FOOL:loss_adv_trg_first:    0.2782  loss_adv_trg_second:    0.2724 DISTARGET:loss_d_first:    0.1151  loss_d_second:    0.1172
+       0/9     5.75G   0.00896   0.00275 0.0003068   0.01202        11       640
+it:35  loss_yolo:   0.08976  FOOL:loss_adv_trg_first:    0.2227  loss_adv_trg_second:    0.3036 DISTARGET:loss_d_first:    0.1421  loss_d_second:    0.1071
+       0/9     5.75G  0.008958  0.002733 0.0003039   0.01199         9       640
+it:36  loss_yolo:    0.1048  FOOL:loss_adv_trg_first:    0.1969  loss_adv_trg_second:    0.3012 DISTARGET:loss_d_first:    0.1597  loss_d_second:    0.1094
+       0/9     5.75G  0.008995  0.002726 0.0003034   0.01202        12       640
+it:37  loss_yolo:      0.21  FOOL:loss_adv_trg_first:    0.2053  loss_adv_trg_second:    0.3363 DISTARGET:loss_d_first:    0.1533  loss_d_second:   0.09188
+       0/9     5.75G  0.009028  0.002752 0.0006199    0.0124        17       640
+it:38  loss_yolo:   0.06814  FOOL:loss_adv_trg_first:    0.2389  loss_adv_trg_second:    0.3571 DISTARGET:loss_d_first:    0.1343  loss_d_second:   0.09104
+       0/9     5.75G  0.008986  0.002708 0.0006055    0.0123         6       640
+it:39  loss_yolo:   0.08804  FOOL:loss_adv_trg_first:    0.2517  loss_adv_trg_second:    0.3257 DISTARGET:loss_d_first:    0.1269  loss_d_second:    0.1055
+       0/9     5.75G  0.008975  0.002698 0.0005941   0.01227        15       640
+it:40  loss_yolo:   0.08546  FOOL:loss_adv_trg_first:    0.2869  loss_adv_trg_second:    0.2658 DISTARGET:loss_d_first:    0.1093  loss_d_second:    0.1266
+       0/9     5.75G  0.008975   0.00267 0.0005839   0.01223         9       640
+it:41  loss_yolo:    0.1095  FOOL:loss_adv_trg_first:    0.3026  loss_adv_trg_second:    0.1945 DISTARGET:loss_d_first:    0.1042  loss_d_second:    0.1671
+       0/9     5.75G  0.009016  0.002676 0.0005714   0.01226        11       640
+it:42  loss_yolo:    0.1052  FOOL:loss_adv_trg_first:    0.3416  loss_adv_trg_second:    0.2294 DISTARGET:loss_d_first:   0.09068  loss_d_second:    0.1443
+       0/9     5.75G  0.009041  0.002684 0.0005593   0.01228        14       640
+it:43  loss_yolo:   0.09452  FOOL:loss_adv_trg_first:     0.275  loss_adv_trg_second:    0.2046 DISTARGET:loss_d_first:    0.1147  loss_d_second:    0.1537
+       0/9     5.75G  0.009057  0.002669  0.000548   0.01227        11       640
+it:44  loss_yolo:   0.08631  FOOL:loss_adv_trg_first:    0.2655  loss_adv_trg_second:    0.2532 DISTARGET:loss_d_first:    0.1221  loss_d_second:    0.1349
+       0/9     5.75G  0.009042  0.002661 0.0005371   0.01224         9       640
+it:45  loss_yolo:    0.1096  FOOL:loss_adv_trg_first:    0.2383  loss_adv_trg_second:    0.2508 DISTARGET:loss_d_first:     0.137  loss_d_second:    0.1341
+       0/9     5.75G  0.009069  0.002665 0.0005388   0.01227        12       640
+it:46  loss_yolo:    0.1189  FOOL:loss_adv_trg_first:    0.2065  loss_adv_trg_second:    0.2722 DISTARGET:loss_d_first:    0.1557  loss_d_second:    0.1221
+       0/9     5.75G  0.009127   0.00267 0.0005302   0.01233        11       640
+it:47  loss_yolo:   0.07379  FOOL:loss_adv_trg_first:    0.2614  loss_adv_trg_second:    0.4398 DISTARGET:loss_d_first:    0.1245  loss_d_second:     0.065
+       0/9     5.75G  0.009085  0.002657 0.0005206   0.01226         7       640
+it:48  loss_yolo:   0.09234  FOOL:loss_adv_trg_first:    0.3261  loss_adv_trg_second:    0.4535 DISTARGET:loss_d_first:   0.09855  loss_d_second:   0.06448
+       0/9     5.75G  0.009082  0.002654 0.0005115   0.01225        13       640
+it:49  loss_yolo:    0.1104  FOOL:loss_adv_trg_first:    0.3494  loss_adv_trg_second:    0.4306 DISTARGET:loss_d_first:   0.08861  loss_d_second:   0.07068
+       0/9     5.75G  0.009082  0.002694  0.000503   0.01228        13       640
+it:50  loss_yolo:   0.09837  FOOL:loss_adv_trg_first:    0.3001  loss_adv_trg_second:    0.3037 DISTARGET:loss_d_first:     0.108  loss_d_second:    0.1072
+       0/9     5.75G   0.00909  0.002692  0.000497   0.01228        12       640
+it:51  loss_yolo:   0.09302  FOOL:loss_adv_trg_first:    0.2834  loss_adv_trg_second:    0.2668 DISTARGET:loss_d_first:    0.1171  loss_d_second:    0.1339
+       0/9     5.75G    0.0091  0.002676 0.0004908   0.01227         9       640
+it:52  loss_yolo:   0.09521  FOOL:loss_adv_trg_first:    0.3094  loss_adv_trg_second:    0.3482 DISTARGET:loss_d_first:    0.1057  loss_d_second:    0.1048
+       0/9     5.75G  0.009094  0.002683  0.000483   0.01226        10       640
+it:53  loss_yolo:   0.08489  FOOL:loss_adv_trg_first:    0.2478  loss_adv_trg_second:    0.2533 DISTARGET:loss_d_first:    0.1357  loss_d_second:    0.1366
+       0/9     5.75G   0.00908  0.002675 0.0004749   0.01223        10       640
+it:54  loss_yolo:    0.1009  FOOL:loss_adv_trg_first:    0.2771  loss_adv_trg_second:    0.3451 DISTARGET:loss_d_first:    0.1194  loss_d_second:    0.1068
+       0/9     5.75G  0.009067  0.002699 0.0004703   0.01224        15       640
+it:55  loss_yolo:    0.0929  FOOL:loss_adv_trg_first:    0.3603  loss_adv_trg_second:    0.3617 DISTARGET:loss_d_first:   0.08613  loss_d_second:   0.09217
+       0/9     5.75G  0.009063  0.002699 0.0004638   0.01223         9       640
+it:56  loss_yolo:   0.07907  FOOL:loss_adv_trg_first:    0.3556  loss_adv_trg_second:    0.3279 DISTARGET:loss_d_first:   0.09321  loss_d_second:    0.1221
+       0/9     5.75G  0.009038  0.002689 0.0004565   0.01218         9       640
+it:57  loss_yolo:   0.08546  FOOL:loss_adv_trg_first:    0.3201  loss_adv_trg_second:    0.2413 DISTARGET:loss_d_first:    0.1323  loss_d_second:    0.2001
+       0/9     5.75G  0.009026  0.002682 0.0004499   0.01216        10       640
+it:58  loss_yolo:    0.1144  FOOL:loss_adv_trg_first:    0.3827  loss_adv_trg_second:    0.3484 DISTARGET:loss_d_first:   0.08745  loss_d_second:    0.1142
+       0/9     5.75G  0.009078  0.002673 0.0004439   0.01219         9       640
+it:59  loss_yolo:    0.2763  FOOL:loss_adv_trg_first:     0.403  loss_adv_trg_second:    0.5434 DISTARGET:loss_d_first:   0.07775  loss_d_second:   0.06131
+       0/9     5.75G  0.009085  0.002689 0.0007923   0.01257        13       640
+it:60  loss_yolo:    0.1019  FOOL:loss_adv_trg_first:    0.3076  loss_adv_trg_second:    0.3509 DISTARGET:loss_d_first:    0.1248  loss_d_second:     0.114
+       0/9     5.75G  0.009094  0.002695 0.0007802   0.01257         9       640
+it:61  loss_yolo:    0.1136  FOOL:loss_adv_trg_first:    0.6762  loss_adv_trg_second:    0.8035 DISTARGET:loss_d_first:   0.04464  loss_d_second:   0.04546
+       0/9     5.75G  0.009098  0.002708 0.0007906    0.0126        14       640
+it:62  loss_yolo:   0.08487  FOOL:loss_adv_trg_first:    0.3954  loss_adv_trg_second:    0.4071 DISTARGET:loss_d_first:    0.1038  loss_d_second:   0.09218
+       0/9     5.75G  0.009082  0.002701 0.0007811   0.01256        11       640
+it:63  loss_yolo:   0.08771  FOOL:loss_adv_trg_first:    0.2693  loss_adv_trg_second:    0.2818 DISTARGET:loss_d_first:     0.153  loss_d_second:    0.1531
+       0/9     5.75G  0.009084  0.002685 0.0007701   0.01254         7       640
+it:64  loss_yolo:   0.09459  FOOL:loss_adv_trg_first:    0.5214  loss_adv_trg_second:    0.3517 DISTARGET:loss_d_first:   0.07148  loss_d_second:   0.09559
+       0/9     5.75G  0.009082  0.002686   0.00076   0.01253        14       640
+it:65  loss_yolo:    0.1103  FOOL:loss_adv_trg_first:     0.537  loss_adv_trg_second:    0.3071 DISTARGET:loss_d_first:    0.0622  loss_d_second:    0.1298
+       0/9     5.75G   0.00907  0.002727   0.00075   0.01255        16       640
+it:66  loss_yolo:   0.05778  FOOL:loss_adv_trg_first:    0.5101  loss_adv_trg_second:    0.3484 DISTARGET:loss_d_first:   0.06536  loss_d_second:    0.1175
+       0/9     5.75G  0.009021  0.002708 0.0007396   0.01247         7       640
+it:67  loss_yolo:   0.08625  FOOL:loss_adv_trg_first:    0.2879  loss_adv_trg_second:    0.2375 DISTARGET:loss_d_first:    0.1311  loss_d_second:     0.179
+       0/9     5.75G  0.009005  0.002704 0.0007341   0.01244        12       640
+it:68  loss_yolo:    0.1295  FOOL:loss_adv_trg_first:    0.4279  loss_adv_trg_second:    0.3625 DISTARGET:loss_d_first:   0.09658  loss_d_second:    0.1233
+       0/9     5.75G  0.009005  0.002707 0.0007853    0.0125        15       640
+it:69  loss_yolo:    0.1151  FOOL:loss_adv_trg_first:    0.6769  loss_adv_trg_second:    0.5404 DISTARGET:loss_d_first:   0.07123  loss_d_second:    0.0644
+       0/9     5.75G  0.009026  0.002723 0.0007755   0.01252        16       640
+it:70  loss_yolo:    0.1256  FOOL:loss_adv_trg_first:    0.3323  loss_adv_trg_second:    0.2602 DISTARGET:loss_d_first:     0.145  loss_d_second:    0.1614
+       0/9     5.75G  0.009055  0.002749 0.0007656   0.01257        14       640
+it:71  loss_yolo:   0.09315  FOOL:loss_adv_trg_first:    0.5179  loss_adv_trg_second:    0.4644 DISTARGET:loss_d_first:   0.07366  loss_d_second:   0.09207
+       0/9     5.75G  0.009047  0.002745 0.0007639   0.01256        14       640
+it:72  loss_yolo:   0.07891  FOOL:loss_adv_trg_first:    0.5392  loss_adv_trg_second:    0.4568 DISTARGET:loss_d_first:   0.06042  loss_d_second:   0.08194
+       0/9     5.75G  0.009035   0.00273 0.0007548   0.01252         8       640
+it:73  loss_yolo:    0.1177  FOOL:loss_adv_trg_first:     0.572  loss_adv_trg_second:     0.492 DISTARGET:loss_d_first:   0.09107  loss_d_second:   0.09418
+       0/9     5.75G  0.009036  0.002725 0.0007885   0.01255        12       640
+it:74  loss_yolo:    0.1122  FOOL:loss_adv_trg_first:    0.4854  loss_adv_trg_second:    0.4444 DISTARGET:loss_d_first:   0.07027  loss_d_second:   0.09362
+       0/9     5.75G  0.009047  0.002743 0.0007791   0.01257        16       640
+it:75  loss_yolo:    0.1053  FOOL:loss_adv_trg_first:    0.5968  loss_adv_trg_second:    0.5952 DISTARGET:loss_d_first:   0.05899  loss_d_second:   0.04826
+       0/9     5.75G  0.009057  0.002741 0.0007778   0.01258        12       640
+it:76  loss_yolo:    0.1367  FOOL:loss_adv_trg_first:    0.4979  loss_adv_trg_second:    0.4379 DISTARGET:loss_d_first:   0.07592  loss_d_second:   0.07422
+       0/9     5.75G   0.00908  0.002786 0.0007689   0.01264        21       640
+it:77  loss_yolo:    0.1063  FOOL:loss_adv_trg_first:    0.5275  loss_adv_trg_second:    0.5619 DISTARGET:loss_d_first:   0.05176  loss_d_second:   0.06323
+       0/9     5.75G  0.009102  0.002782 0.0007597   0.01264        14       640
+it:78  loss_yolo:   0.09274  FOOL:loss_adv_trg_first:    0.4377  loss_adv_trg_second:    0.3172 DISTARGET:loss_d_first:   0.08587  loss_d_second:    0.1442
+       0/9     5.75G  0.009096  0.002783 0.0007512   0.01263        17       640
+it:79  loss_yolo:    0.1113  FOOL:loss_adv_trg_first:    0.4117  loss_adv_trg_second:    0.3526 DISTARGET:loss_d_first:   0.07602  loss_d_second:    0.1095
+       0/9     5.75G  0.009111  0.002792 0.0007425   0.01265        15       640
+it:80  loss_yolo:    0.1282  FOOL:loss_adv_trg_first:    0.3421  loss_adv_trg_second:    0.3174 DISTARGET:loss_d_first:     0.128  loss_d_second:    0.1098
+       0/9     5.75G  0.009152  0.002802 0.0007342   0.01269        17       640
+it:81  loss_yolo:   0.08774  FOOL:loss_adv_trg_first:    0.9001  loss_adv_trg_second:     0.317 DISTARGET:loss_d_first:   0.04057  loss_d_second:    0.1075
+       0/9     5.75G  0.009142  0.002799 0.0007258   0.01267        10       640
+it:82  loss_yolo:    0.1055  FOOL:loss_adv_trg_first:     1.134  loss_adv_trg_second:     0.427 DISTARGET:loss_d_first:   0.02722  loss_d_second:   0.07635
+       0/9     5.75G  0.009147  0.002808 0.0007179   0.01267        14       640
+it:83  loss_yolo:    0.1014  FOOL:loss_adv_trg_first:    0.2349  loss_adv_trg_second:     0.443 DISTARGET:loss_d_first:    0.1453  loss_d_second:   0.06502
+       0/9     5.75G  0.009147  0.002814 0.0007129   0.01267        14       640
+it:84  loss_yolo:   0.07206  FOOL:loss_adv_trg_first:    0.1937  loss_adv_trg_second:    0.4018 DISTARGET:loss_d_first:    0.1953  loss_d_second:   0.07843
+       0/9     5.75G  0.009124  0.002801 0.0007052   0.01263        12       640
+it:85  loss_yolo:     0.111  FOOL:loss_adv_trg_first:     0.246  loss_adv_trg_second:      0.65 DISTARGET:loss_d_first:    0.1621  loss_d_second:   0.03595
+       0/9     5.75G  0.009128  0.002815 0.0007019   0.01264        15       640
+it:86  loss_yolo:   0.09117  FOOL:loss_adv_trg_first:    0.1749  loss_adv_trg_second:    0.4221 DISTARGET:loss_d_first:    0.2161  loss_d_second:    0.1203
+       0/9     5.75G  0.009118  0.002817 0.0006948   0.01263        16       640
+it:87  loss_yolo:   0.06983  FOOL:loss_adv_trg_first:    0.3653  loss_adv_trg_second:    0.4708 DISTARGET:loss_d_first:   0.09903  loss_d_second:   0.07019
+       0/9     5.75G  0.009092  0.002806 0.0006878   0.01259        12       640
+it:88  loss_yolo:    0.1038  FOOL:loss_adv_trg_first:    0.3841  loss_adv_trg_second:    0.4676 DISTARGET:loss_d_first:    0.0982  loss_d_second:   0.07268
+       0/9     5.75G  0.009089  0.002821 0.0006808   0.01259        19       640
+it:89  loss_yolo:    0.1133  FOOL:loss_adv_trg_first:    0.8957  loss_adv_trg_second:    0.4631 DISTARGET:loss_d_first:   0.01201  loss_d_second:   0.06253
+       0/9     5.75G  0.009089  0.002822 0.0006967   0.01261        13       640
+it:90  loss_yolo:   0.09343  FOOL:loss_adv_trg_first:    0.7366  loss_adv_trg_second:     0.301 DISTARGET:loss_d_first:   0.02468  loss_d_second:    0.1235
+       0/9     5.75G  0.009077   0.00283  0.000691    0.0126        15       640
+it:91  loss_yolo:    0.1089  FOOL:loss_adv_trg_first:    0.8019  loss_adv_trg_second:    0.5036 DISTARGET:loss_d_first:   0.01559  loss_d_second:   0.06196
+       0/9     5.75G  0.009102  0.002822 0.0006843   0.01261        13       640
+it:92  loss_yolo:    0.1119  FOOL:loss_adv_trg_first:    0.8304  loss_adv_trg_second:    0.4628 DISTARGET:loss_d_first:    0.0235  loss_d_second:    0.1233
+       0/9     5.75G  0.009124   0.00282 0.0006789   0.01262        13       640
+it:93  loss_yolo:    0.1053  FOOL:loss_adv_trg_first:    0.5275  loss_adv_trg_second:    0.4465 DISTARGET:loss_d_first:   0.05511  loss_d_second:   0.09436
+       0/9     5.75G  0.009126  0.002831 0.0006723   0.01263        15       640
+it:94  loss_yolo:    0.1063  FOOL:loss_adv_trg_first:    0.5222  loss_adv_trg_second:    0.4701 DISTARGET:loss_d_first:   0.05216  loss_d_second:   0.07072
+       0/9     5.75G  0.009133  0.002838 0.0006659   0.01264         9       640
+it:95  loss_yolo:   0.09583  FOOL:loss_adv_trg_first:    0.2573  loss_adv_trg_second:    0.3887 DISTARGET:loss_d_first:    0.1561  loss_d_second:    0.1078
+       0/9     5.75G  0.009132  0.002838 0.0006595   0.01263        14       640
+it:96  loss_yolo:   0.07727  FOOL:loss_adv_trg_first:    0.3355  loss_adv_trg_second:    0.3455 DISTARGET:loss_d_first:    0.1097  loss_d_second:    0.1153
+       0/9     5.75G  0.009118  0.002828 0.0006534    0.0126         8       640
+it:97  loss_yolo:     0.131  FOOL:loss_adv_trg_first:    0.2325  loss_adv_trg_second:    0.4142 DISTARGET:loss_d_first:    0.1653  loss_d_second:   0.09114
+       0/9     5.75G  0.009137  0.002853 0.0006473   0.01264        21       640
+it:98  loss_yolo:    0.1333  FOOL:loss_adv_trg_first:    0.2675  loss_adv_trg_second:    0.5485 DISTARGET:loss_d_first:    0.1515  loss_d_second:    0.1079
+       0/9     5.75G  0.009178  0.002858 0.0006414   0.01268        17       640
+it:99  loss_yolo:   0.09993  FOOL:loss_adv_trg_first:    0.2819  loss_adv_trg_second:    0.3848 DISTARGET:loss_d_first:    0.1548  loss_d_second:    0.1422
+       0/9     5.75G  0.009176  0.002852  0.000648   0.01268        13       640
+it:100  loss_yolo:   0.09404  FOOL:loss_adv_trg_first:    0.3415  loss_adv_trg_second:    0.6111 DISTARGET:loss_d_first:    0.1129  loss_d_second:   0.04448
+       0/9     5.75G  0.009175  0.002849 0.0006436   0.01267        14       640
+it:101  loss_yolo:   0.09689  FOOL:loss_adv_trg_first:      0.52  loss_adv_trg_second:    0.7313 DISTARGET:loss_d_first:    0.1116  loss_d_second:   0.05276
+       0/9     5.75G  0.009168  0.002855 0.0006385   0.01266        10       640
+it:102  loss_yolo:    0.1117  FOOL:loss_adv_trg_first:    0.5046  loss_adv_trg_second:    0.6297 DISTARGET:loss_d_first:   0.06098  loss_d_second:   0.03355
+       0/9     5.75G  0.009172  0.002866  0.000636   0.01267        20       640
+it:103  loss_yolo:    0.1335  FOOL:loss_adv_trg_first:    0.7467  loss_adv_trg_second:    0.4759 DISTARGET:loss_d_first:   0.03863  loss_d_second:   0.07206
+       0/9     5.75G  0.009212   0.00287 0.0006304   0.01271        13       640
+it:104  loss_yolo:    0.1066  FOOL:loss_adv_trg_first:    0.6711  loss_adv_trg_second:    0.3642 DISTARGET:loss_d_first:   0.06005  loss_d_second:    0.1152
+       0/9     5.75G  0.009219  0.002874 0.0006249   0.01272        10       640
+it:105  loss_yolo:   0.09059  FOOL:loss_adv_trg_first:    0.9303  loss_adv_trg_second:    0.4764 DISTARGET:loss_d_first:   0.02817  loss_d_second:    0.1094
+       0/9     5.75G  0.009216   0.00287 0.0006196   0.01271        15       640
+it:106  loss_yolo:      0.11  FOOL:loss_adv_trg_first:     1.137  loss_adv_trg_second:    0.5037 DISTARGET:loss_d_first:   0.06291  loss_d_second:    0.0724
+       0/9     5.75G   0.00922  0.002877  0.000618   0.01272        13       640
+it:107  loss_yolo:    0.1246  FOOL:loss_adv_trg_first:    0.5207  loss_adv_trg_second:    0.3227 DISTARGET:loss_d_first:   0.06174  loss_d_second:     0.139
+       0/9     5.75G  0.009249   0.00288 0.0006129   0.01274        12       640
+it:108  loss_yolo:    0.1354  FOOL:loss_adv_trg_first:    0.5868  loss_adv_trg_second:    0.4022 DISTARGET:loss_d_first:   0.04643  loss_d_second:   0.09929
+       0/9     5.75G  0.009275  0.002891 0.0006141   0.01278        19       640
+it:109  loss_yolo:    0.1123  FOOL:loss_adv_trg_first:    0.5669  loss_adv_trg_second:    0.6438 DISTARGET:loss_d_first:   0.04674  loss_d_second:   0.03092
+       0/9     5.75G  0.009289  0.002893 0.0006091   0.01279        17       640
+it:110  loss_yolo:   0.09721  FOOL:loss_adv_trg_first:     0.487  loss_adv_trg_second:    0.4446 DISTARGET:loss_d_first:   0.08171  loss_d_second:   0.08846
+       0/9     5.75G  0.009292  0.002889 0.0006047   0.01279        11       640
+it:111  loss_yolo:    0.0999  FOOL:loss_adv_trg_first:    0.4579  loss_adv_trg_second:    0.7325 DISTARGET:loss_d_first:   0.09283  loss_d_second:   0.05398
+       0/9     5.75G  0.009298  0.002885 0.0006004   0.01278        12       640
+it:112  loss_yolo:     0.111  FOOL:loss_adv_trg_first:    0.5794  loss_adv_trg_second:     0.985 DISTARGET:loss_d_first:   0.07472  loss_d_second:   0.07338
+       0/9     5.75G  0.009307  0.002886 0.0005994   0.01279        13       640
+it:113  loss_yolo:   0.09674  FOOL:loss_adv_trg_first:    0.4483  loss_adv_trg_second:    0.3785 DISTARGET:loss_d_first:   0.05566  loss_d_second:   0.07404
+       0/9     5.72G  0.009305  0.002887 0.0005947   0.01279        14       640
+               Class      Images      Labels           P           R      mAP@.5
+                 all         412         412       0.999           1       0.997       0.924
+Images sizes do not match. This will causes images to be display incorrectly in the UI.
+
+     Epoch   gpu_mem       box       obj       cls     total    labels  img_size
+  0%|                                                   | 0/197 [00:00<?, ?it/s]
+it:197  loss_yolo:   0.09862  FOOL:loss_adv_trg_first:    0.4609  loss_adv_trg_second:    0.4065 DISTARGET:loss_d_first:    0.0863  loss_d_second:    0.1001
+       1/9     5.58G   0.01041   0.00179 0.0001288   0.01233         9       640
+it:198  loss_yolo:   0.08263  FOOL:loss_adv_trg_first:    0.5197  loss_adv_trg_second:    0.5736 DISTARGET:loss_d_first:   0.07322  loss_d_second:   0.05809
+       1/9     5.58G  0.008979  0.002259 9.007e-05   0.01133        11       640
+it:199  loss_yolo:   0.08919  FOOL:loss_adv_trg_first:    0.8242  loss_adv_trg_second:    0.6757 DISTARGET:loss_d_first:   0.02384  loss_d_second:   0.06578
+       1/9     5.58G  0.008671  0.002516 8.089e-05   0.01127        14       640
+it:200  loss_yolo:    0.1237  FOOL:loss_adv_trg_first:    0.6998  loss_adv_trg_second:    0.3572 DISTARGET:loss_d_first:   0.05491  loss_d_second:    0.1684
+       1/9     5.58G  0.009159  0.002917 0.0002402   0.01232        15       640
+it:201  loss_yolo:    0.1002  FOOL:loss_adv_trg_first:     1.166  loss_adv_trg_second:    0.8005 DISTARGET:loss_d_first:   0.04523  loss_d_second:      0.06
+       1/9     5.58G  0.009244  0.002913 0.0002015   0.01236         9       640
+it:202  loss_yolo:    0.1203  FOOL:loss_adv_trg_first:    0.9119  loss_adv_trg_second:    0.4945 DISTARGET:loss_d_first:   0.06167  loss_d_second:    0.1048
+       1/9     5.58G  0.009397  0.003228 0.0001793    0.0128        17       640
+it:203  loss_yolo:    0.1194  FOOL:loss_adv_trg_first:    0.8223  loss_adv_trg_second:    0.6327 DISTARGET:loss_d_first:   0.04249  loss_d_second:    0.0839
+       1/9     5.58G  0.009408  0.003509 0.0001904   0.01311        18       640
+it:204  loss_yolo:    0.1255  FOOL:loss_adv_trg_first:    0.8393  loss_adv_trg_second:    0.5094 DISTARGET:loss_d_first:    0.0456  loss_d_second:    0.0709
+       1/9     5.58G  0.009647  0.003608 0.0001744   0.01343        16       640
+it:205  loss_yolo:   0.09593  FOOL:loss_adv_trg_first:    0.3816  loss_adv_trg_second:    0.3142 DISTARGET:loss_d_first:    0.1028  loss_d_second:    0.1195
+       1/9     5.58G   0.00965  0.003455  0.000164   0.01327         8       640
+it:206  loss_yolo:    0.1023  FOOL:loss_adv_trg_first:    0.4256  loss_adv_trg_second:    0.3253 DISTARGET:loss_d_first:   0.09149  loss_d_second:    0.1094
+       1/9     5.58G  0.009653  0.003412 0.0001553   0.01322        12       640
+it:207  loss_yolo:    0.1084  FOOL:loss_adv_trg_first:    0.4347  loss_adv_trg_second:    0.3841 DISTARGET:loss_d_first:    0.0751  loss_d_second:   0.08863
+       1/9     5.58G  0.009682  0.003421  0.000147   0.01325        16       640
+it:208  loss_yolo:    0.1078  FOOL:loss_adv_trg_first:    0.4413  loss_adv_trg_second:     0.305 DISTARGET:loss_d_first:   0.08779  loss_d_second:    0.1224
+       1/9     5.58G  0.009758   0.00337 0.0001413   0.01327        13       640
+it:209  loss_yolo:    0.1125  FOOL:loss_adv_trg_first:    0.6296  loss_adv_trg_second:    0.5769 DISTARGET:loss_d_first:    0.0597  loss_d_second:   0.05855
+       1/9     5.58G   0.00983  0.003366 0.0001341   0.01333        13       640
+it:210  loss_yolo:    0.1037  FOOL:loss_adv_trg_first:    0.6448  loss_adv_trg_second:    0.7888 DISTARGET:loss_d_first:   0.03329  loss_d_second:   0.01415
+       1/9     5.58G  0.009841  0.003335 0.0001283    0.0133        11       640
+it:211  loss_yolo:    0.0939  FOOL:loss_adv_trg_first:    0.7233  loss_adv_trg_second:    0.3928 DISTARGET:loss_d_first:   0.04849  loss_d_second:    0.1353
+       1/9     5.58G  0.009792  0.003285 0.0001233    0.0132        11       640
+it:212  loss_yolo:   0.07786  FOOL:loss_adv_trg_first:    0.6945  loss_adv_trg_second:    0.4542 DISTARGET:loss_d_first:    0.0568  loss_d_second:    0.1125
+       1/9     5.58G  0.009656  0.003209 0.0001185   0.01298         5       640
+it:213  loss_yolo:   0.09914  FOOL:loss_adv_trg_first:    0.7765  loss_adv_trg_second:    0.3621 DISTARGET:loss_d_first:   0.05016  loss_d_second:   0.09785
+       1/9     5.58G  0.009658  0.003175 0.0001159   0.01295        10       640
+it:214  loss_yolo:   0.08197  FOOL:loss_adv_trg_first:    0.6329  loss_adv_trg_second:    0.2715 DISTARGET:loss_d_first:   0.03956  loss_d_second:    0.1356
+       1/9     5.58G  0.009567  0.003119 0.0001124    0.0128        12       640
+it:215  loss_yolo:     0.106  FOOL:loss_adv_trg_first:    0.8001  loss_adv_trg_second:    0.4645 DISTARGET:loss_d_first:   0.03909  loss_d_second:   0.07137
+       1/9     5.58G   0.00956  0.003117  0.000145   0.01282        13       640
+it:216  loss_yolo:   0.09475  FOOL:loss_adv_trg_first:    0.7306  loss_adv_trg_second:    0.5107 DISTARGET:loss_d_first:   0.03123  loss_d_second:   0.05519
+       1/9     5.58G  0.009487  0.003145 0.0001407   0.01277        16       640
+it:217  loss_yolo:    0.1133  FOOL:loss_adv_trg_first:    0.5322  loss_adv_trg_second:     0.749 DISTARGET:loss_d_first:   0.05071  loss_d_second:   0.03586
+       1/9     5.58G  0.009492  0.003211 0.0001368   0.01284        20       640
+it:218  loss_yolo:   0.09017  FOOL:loss_adv_trg_first:    0.5562  loss_adv_trg_second:    0.7358 DISTARGET:loss_d_first:   0.06345  loss_d_second:   0.03879
+       1/9     5.58G  0.009442  0.003193 0.0001329   0.01277        14       640
+it:219  loss_yolo:   0.08801  FOOL:loss_adv_trg_first:    0.4269  loss_adv_trg_second:    0.6269 DISTARGET:loss_d_first:    0.0826  loss_d_second:   0.04951
+       1/9     5.58G  0.009408  0.003154 0.0001298   0.01269        11       640
+it:220  loss_yolo:   0.08604  FOOL:loss_adv_trg_first:      0.59  loss_adv_trg_second:    0.4031 DISTARGET:loss_d_first:   0.04631  loss_d_second:   0.08927
+       1/9     5.58G  0.009365  0.003119 0.0001265   0.01261         9       640
+it:221  loss_yolo:    0.1444  FOOL:loss_adv_trg_first:    0.5803  loss_adv_trg_second:    0.5521 DISTARGET:loss_d_first:   0.05802  loss_d_second:   0.07102
+       1/9     5.58G  0.009413  0.003076 0.0003393   0.01283         9       640
+it:222  loss_yolo:   0.07828  FOOL:loss_adv_trg_first:    0.5501  loss_adv_trg_second:    0.3715 DISTARGET:loss_d_first:   0.07262  loss_d_second:    0.1064
+       1/9     5.58G  0.009376  0.003001 0.0003335   0.01271         6       640
+it:223  loss_yolo:    0.1224  FOOL:loss_adv_trg_first:    0.7691  loss_adv_trg_second:    0.4076 DISTARGET:loss_d_first:   0.03145  loss_d_second:   0.07903
+       1/9     5.58G  0.009487  0.002974 0.0003457   0.01281        10       640
+it:224  loss_yolo:    0.1519  FOOL:loss_adv_trg_first:    0.6787  loss_adv_trg_second:    0.3331 DISTARGET:loss_d_first:   0.04592  loss_d_second:     0.109
+       1/9     5.58G  0.009532   0.00297 0.0005255   0.01303        12       640
+it:225  loss_yolo:    0.1059  FOOL:loss_adv_trg_first:    0.6891  loss_adv_trg_second:    0.4004 DISTARGET:loss_d_first:    0.0386  loss_d_second:   0.08172
+       1/9     5.58G  0.009585   0.00294 0.0005094   0.01303        10       640
+it:226  loss_yolo:    0.1403  FOOL:loss_adv_trg_first:    0.6615  loss_adv_trg_second:     0.661 DISTARGET:loss_d_first:   0.03669  loss_d_second:   0.03134
+       1/9     5.58G  0.009709  0.002978  0.000498   0.01319        14       640
+it:227  loss_yolo:    0.2019  FOOL:loss_adv_trg_first:    0.7658  loss_adv_trg_second:    0.5881 DISTARGET:loss_d_first:   0.04156  loss_d_second:   0.05884
+       1/9     5.58G  0.009884  0.003038 0.0006513   0.01357        17       640
+it:228  loss_yolo:    0.1043  FOOL:loss_adv_trg_first:     0.841  loss_adv_trg_second:    0.9141 DISTARGET:loss_d_first:   0.02133  loss_d_second:   0.02212
+       1/9     5.58G  0.009912  0.003012 0.0006326   0.01356         7       640
+it:229  loss_yolo:   0.08717  FOOL:loss_adv_trg_first:    0.6128  loss_adv_trg_second:    0.5059 DISTARGET:loss_d_first:   0.05329  loss_d_second:   0.06182
+       1/9     5.58G  0.009884  0.002975 0.0006175   0.01348        10       640
+it:230  loss_yolo:    0.1253  FOOL:loss_adv_trg_first:    0.8038  loss_adv_trg_second:    0.8248 DISTARGET:loss_d_first:   0.07109  loss_d_second:   0.05163
+       1/9     5.58G  0.009914  0.003006 0.0006203   0.01354        15       640
+it:231  loss_yolo:    0.1018  FOOL:loss_adv_trg_first:    0.7934  loss_adv_trg_second:     1.011 DISTARGET:loss_d_first:   0.05544  loss_d_second:    0.0527
+       1/9     5.58G  0.009849  0.003017 0.0006514   0.01352        15       640
+it:232  loss_yolo:   0.09977  FOOL:loss_adv_trg_first:     1.025  loss_adv_trg_second:    0.9441 DISTARGET:loss_d_first:   0.03244  loss_d_second:    0.1025
+       1/9     5.58G  0.009848  0.003004 0.0006365   0.01349        10       640
+it:233  loss_yolo:    0.1276  FOOL:loss_adv_trg_first:    0.8163  loss_adv_trg_second:    0.4803 DISTARGET:loss_d_first:   0.02297  loss_d_second:   0.06131
+       1/9     5.58G  0.009898  0.003034 0.0006226   0.01355        12       640
+it:234  loss_yolo:    0.1294  FOOL:loss_adv_trg_first:    0.6865  loss_adv_trg_second:    0.4521 DISTARGET:loss_d_first:   0.04569  loss_d_second:    0.1071
+       1/9     5.58G  0.009912  0.003097 0.0006144   0.01362        15       640
+it:235  loss_yolo:    0.1198  FOOL:loss_adv_trg_first:    0.6151  loss_adv_trg_second:    0.4195 DISTARGET:loss_d_first:   0.04246  loss_d_second:    0.1022
+       1/9     5.58G  0.009946  0.003107 0.0006053   0.01366        18       640
+it:236  loss_yolo:   0.08551  FOOL:loss_adv_trg_first:    0.6817  loss_adv_trg_second:     0.466 DISTARGET:loss_d_first:   0.03781  loss_d_second:    0.1068
+       1/9     5.58G  0.009922  0.003071 0.0005913   0.01358         8       640
+it:237  loss_yolo:    0.1101  FOOL:loss_adv_trg_first:    0.6309  loss_adv_trg_second:    0.5652 DISTARGET:loss_d_first:   0.06022  loss_d_second:   0.07537
+       1/9     5.58G  0.009978  0.003032 0.0005782   0.01359         8       640
+it:238  loss_yolo:    0.1121  FOOL:loss_adv_trg_first:    0.7333  loss_adv_trg_second:     1.033 DISTARGET:loss_d_first:   0.03228  loss_d_second:   0.02024
+       1/9     5.58G   0.01001  0.003018 0.0005658    0.0136        11       640
+it:239  loss_yolo:     0.118  FOOL:loss_adv_trg_first:    0.8037  loss_adv_trg_second:      1.31 DISTARGET:loss_d_first:   0.01405  loss_d_second:   0.02597
+       1/9     5.58G   0.01004  0.003031 0.0005538   0.01363        12       640
+it:240  loss_yolo:    0.1393  FOOL:loss_adv_trg_first:    0.7432  loss_adv_trg_second:     1.296 DISTARGET:loss_d_first:    0.0322  loss_d_second:   0.02197
+       1/9     5.58G   0.01007  0.003029  0.000615   0.01371        13       640
+it:241  loss_yolo:     0.109  FOOL:loss_adv_trg_first:    0.6974  loss_adv_trg_second:    0.6356 DISTARGET:loss_d_first:   0.04026  loss_d_second:   0.05158
+       1/9     5.58G   0.01007   0.00304 0.0006028   0.01371        11       640
+it:242  loss_yolo:    0.1211  FOOL:loss_adv_trg_first:    0.6566  loss_adv_trg_second:    0.3257 DISTARGET:loss_d_first:   0.06184  loss_d_second:    0.1314
+       1/9     5.58G   0.01012   0.00303  0.000591   0.01374         9       640
+it:243  loss_yolo:   0.08554  FOOL:loss_adv_trg_first:    0.6965  loss_adv_trg_second:    0.4288 DISTARGET:loss_d_first:   0.08165  loss_d_second:    0.1068
+       1/9     5.58G   0.01008  0.003017 0.0005829   0.01368        12       640
+it:244  loss_yolo:   0.09386  FOOL:loss_adv_trg_first:    0.5703  loss_adv_trg_second:    0.3086 DISTARGET:loss_d_first:   0.08987  loss_d_second:    0.1512
+       1/9     5.58G   0.01007  0.002996 0.0005718   0.01364        10       640
+it:245  loss_yolo:    0.1073  FOOL:loss_adv_trg_first:    0.5909  loss_adv_trg_second:    0.3436 DISTARGET:loss_d_first:   0.04619  loss_d_second:    0.1169
+       1/9     5.58G   0.01004  0.002993 0.0005962   0.01363        14       640
+it:246  loss_yolo:    0.1047  FOOL:loss_adv_trg_first:    0.6542  loss_adv_trg_second:    0.5842 DISTARGET:loss_d_first:   0.06017  loss_d_second:   0.08534
+       1/9     5.58G   0.01005  0.002983 0.0005894   0.01362        15       640
+it:247  loss_yolo:    0.1081  FOOL:loss_adv_trg_first:     1.207  loss_adv_trg_second:    0.9465 DISTARGET:loss_d_first:   0.03195  loss_d_second:   0.04061
+       1/9     5.58G   0.01006  0.002978 0.0005803   0.01362        12       640
+it:248  loss_yolo:   0.09729  FOOL:loss_adv_trg_first:    0.9112  loss_adv_trg_second:    0.6617 DISTARGET:loss_d_first:   0.04596  loss_d_second:   0.09795
+       1/9     5.58G   0.01005  0.002966 0.0005704   0.01359        11       640
+it:249  loss_yolo:    0.1106  FOOL:loss_adv_trg_first:     1.276  loss_adv_trg_second:    0.9198 DISTARGET:loss_d_first:    0.0208  loss_d_second:   0.01746
+       1/9     5.58G   0.01007   0.00296 0.0005606   0.01359        12       640
+it:250  loss_yolo:   0.09838  FOOL:loss_adv_trg_first:    0.7823  loss_adv_trg_second:     1.041 DISTARGET:loss_d_first:   0.03662  loss_d_second:   0.05484
+       1/9     5.58G   0.01006  0.002957 0.0005528   0.01357        15       640
+it:251  loss_yolo:    0.1349  FOOL:loss_adv_trg_first:    0.7422  loss_adv_trg_second:     1.044 DISTARGET:loss_d_first:   0.04811  loss_d_second:   0.03467
+       1/9     5.58G   0.01008  0.002962 0.0005855   0.01363        11       640
+it:252  loss_yolo:    0.1205  FOOL:loss_adv_trg_first:    0.5758  loss_adv_trg_second:    0.7528 DISTARGET:loss_d_first:   0.07077  loss_d_second:   0.03448
+       1/9     5.58G   0.01012  0.002943 0.0005899   0.01366        11       640
+it:253  loss_yolo:    0.1163  FOOL:loss_adv_trg_first:    0.4744  loss_adv_trg_second:    0.6318 DISTARGET:loss_d_first:   0.08946  loss_d_second:   0.05667
+       1/9     5.58G   0.01013  0.002956  0.000581   0.01367        14       640
+it:254  loss_yolo:    0.1368  FOOL:loss_adv_trg_first:    0.3365  loss_adv_trg_second:     0.485 DISTARGET:loss_d_first:     0.112  loss_d_second:   0.07293
+       1/9     5.58G   0.01018  0.002975 0.0005718   0.01373        15       640
+it:255  loss_yolo:    0.1134  FOOL:loss_adv_trg_first:    0.4432  loss_adv_trg_second:    0.7109 DISTARGET:loss_d_first:   0.09162  loss_d_second:   0.05948
+       1/9     5.58G    0.0102  0.002974 0.0005631   0.01374        14       640
+it:256  loss_yolo:    0.1129  FOOL:loss_adv_trg_first:    0.6664  loss_adv_trg_second:    0.3083 DISTARGET:loss_d_first:   0.06918  loss_d_second:    0.1377
+       1/9     5.58G   0.01021  0.002977 0.0005551   0.01374        11       640
+it:257  loss_yolo:    0.1209  FOOL:loss_adv_trg_first:    0.8825  loss_adv_trg_second:    0.5599 DISTARGET:loss_d_first:   0.02128  loss_d_second:   0.05365
+       1/9     5.58G    0.0102  0.002988 0.0005752   0.01377        11       640
+it:258  loss_yolo:    0.1195  FOOL:loss_adv_trg_first:    0.7433  loss_adv_trg_second:    0.4309 DISTARGET:loss_d_first:   0.04552  loss_d_second:   0.08458
+       1/9     5.58G   0.01021  0.003009 0.0005674   0.01379        16       640
+it:259  loss_yolo:   0.09442  FOOL:loss_adv_trg_first:    0.8604  loss_adv_trg_second:    0.5605 DISTARGET:loss_d_first:   0.05232  loss_d_second:   0.06596
+       1/9     5.58G   0.01019  0.003002 0.0005597   0.01375        10       640
+it:260  loss_yolo:   0.09569  FOOL:loss_adv_trg_first:    0.8662  loss_adv_trg_second:    0.3733 DISTARGET:loss_d_first:   0.04539  loss_d_second:    0.1071
+       1/9     5.58G   0.01019  0.002985 0.0005517   0.01373         8       640
+it:261  loss_yolo:    0.1144  FOOL:loss_adv_trg_first:    0.9422  loss_adv_trg_second:    0.5323 DISTARGET:loss_d_first:   0.03823  loss_d_second:   0.06143
+       1/9     5.58G   0.01022  0.002974 0.0005446   0.01373        12       640
+it:262  loss_yolo:    0.1252  FOOL:loss_adv_trg_first:    0.6668  loss_adv_trg_second:    0.6737 DISTARGET:loss_d_first:   0.03621  loss_d_second:   0.04511
+       1/9     5.58G   0.01025  0.002967  0.000546   0.01376        12       640
+it:263  loss_yolo:     0.119  FOOL:loss_adv_trg_first:    0.8313  loss_adv_trg_second:    0.8713 DISTARGET:loss_d_first:   0.04027  loss_d_second:   0.04183
+       1/9     5.58G   0.01028  0.002965 0.0005388   0.01378        12       640
+it:264  loss_yolo:    0.1048  FOOL:loss_adv_trg_first:    0.5317  loss_adv_trg_second:    0.5621 DISTARGET:loss_d_first:   0.06347  loss_d_second:   0.06501
+       1/9     5.58G   0.01028  0.002958 0.0005316   0.01377        11       640
+it:265  loss_yolo:    0.1059  FOOL:loss_adv_trg_first:    0.3655  loss_adv_trg_second:    0.4835 DISTARGET:loss_d_first:    0.1144  loss_d_second:    0.1014
+       1/9     5.58G   0.01027  0.002965 0.0005247   0.01376        12       640
+it:266  loss_yolo:    0.1166  FOOL:loss_adv_trg_first:    0.7565  loss_adv_trg_second:     1.125 DISTARGET:loss_d_first:    0.0548  loss_d_second:   0.08386
+       1/9     5.58G   0.01029  0.002968 0.0005189   0.01377        18       640
+it:267  loss_yolo:   0.09992  FOOL:loss_adv_trg_first:    0.5023  loss_adv_trg_second:    0.7665 DISTARGET:loss_d_first:   0.07163  loss_d_second:   0.02767
+       1/9     5.58G   0.01027  0.002975 0.0005125   0.01376        17       640
+it:268  loss_yolo:     0.116  FOOL:loss_adv_trg_first:     0.921  loss_adv_trg_second:     0.784 DISTARGET:loss_d_first:   0.01814  loss_d_second:    0.0233
+       1/9     5.58G   0.01028  0.002978 0.0005063   0.01377        14       640
+it:269  loss_yolo:    0.1361  FOOL:loss_adv_trg_first:    0.7693  loss_adv_trg_second:    0.8982 DISTARGET:loss_d_first:   0.03498  loss_d_second:   0.02758
+       1/9     5.58G   0.01032  0.002982 0.0005096   0.01381        14       640
+it:270  loss_yolo:    0.1017  FOOL:loss_adv_trg_first:    0.9973  loss_adv_trg_second:      1.27 DISTARGET:loss_d_first:   0.03657  loss_d_second:   0.05342
+       1/9     5.58G   0.01032   0.00297 0.0005034    0.0138        10       640
+it:271  loss_yolo:   0.09019  FOOL:loss_adv_trg_first:     0.912  loss_adv_trg_second:    0.6772 DISTARGET:loss_d_first:   0.03297  loss_d_second:   0.06102
+       1/9     5.58G    0.0103  0.002969 0.0004978   0.01376        18       640
+it:272  loss_yolo:    0.0832  FOOL:loss_adv_trg_first:    0.7737  loss_adv_trg_second:    0.4833 DISTARGET:loss_d_first:   0.02415  loss_d_second:   0.09128
+       1/9     5.58G   0.01026  0.002962 0.0004918   0.01372        11       640
+it:273  loss_yolo:    0.1198  FOOL:loss_adv_trg_first:    0.6291  loss_adv_trg_second:    0.3929 DISTARGET:loss_d_first:   0.05885  loss_d_second:    0.1266
+       1/9     5.58G   0.01026   0.00299 0.0004864   0.01373        16       640
+it:274  loss_yolo:    0.0756  FOOL:loss_adv_trg_first:    0.7965  loss_adv_trg_second:    0.3384 DISTARGET:loss_d_first:   0.03492  loss_d_second:     0.114
+       1/9     5.58G   0.01022  0.002975 0.0004808   0.01368        10       640
+it:275  loss_yolo:   0.08791  FOOL:loss_adv_trg_first:    0.6214  loss_adv_trg_second:    0.4299 DISTARGET:loss_d_first:   0.04534  loss_d_second:   0.09588
+       1/9     5.58G    0.0102  0.002967 0.0004755   0.01365         8       640
+it:276  loss_yolo:    0.1239  FOOL:loss_adv_trg_first:    0.6273  loss_adv_trg_second:    0.3064 DISTARGET:loss_d_first:   0.04387  loss_d_second:    0.1152
+       1/9     5.58G   0.01021  0.002988 0.0004706   0.01367        20       640
+it:277  loss_yolo:    0.1094  FOOL:loss_adv_trg_first:    0.8429  loss_adv_trg_second:    0.7464 DISTARGET:loss_d_first:   0.02275  loss_d_second:   0.04452
+       1/9     5.58G   0.01022  0.002986 0.0004654   0.01367        11       640
+it:278  loss_yolo:    0.1038  FOOL:loss_adv_trg_first:    0.4881  loss_adv_trg_second:    0.6026 DISTARGET:loss_d_first:   0.07307  loss_d_second:   0.05813
+       1/9      5.5G   0.01023  0.002997 0.0004605   0.01368        17       640
+it:279  loss_yolo:   0.09674  FOOL:loss_adv_trg_first:     0.725  loss_adv_trg_second:    0.6578 DISTARGET:loss_d_first:   0.04118  loss_d_second:   0.04804
+       1/9     5.52G   0.01022  0.002982 0.0004601   0.01366        10       640
+it:280  loss_yolo:    0.1074  FOOL:loss_adv_trg_first:    0.8048  loss_adv_trg_second:    0.7703 DISTARGET:loss_d_first:   0.06739  loss_d_second:   0.07774
+       1/9     5.52G   0.01022   0.00299 0.0004553   0.01366        11       640
+it:281  loss_yolo:    0.1053  FOOL:loss_adv_trg_first:    0.6882  loss_adv_trg_second:     0.703 DISTARGET:loss_d_first:   0.02936  loss_d_second:    0.0345
+       1/9     5.52G    0.0102  0.003005 0.0004507   0.01366        19       640
+it:282  loss_yolo:   0.09693  FOOL:loss_adv_trg_first:    0.6428  loss_adv_trg_second:    0.8269 DISTARGET:loss_d_first:   0.07073  loss_d_second:   0.06282
+       1/9     5.52G    0.0102  0.002992  0.000446   0.01364        11       640
+it:283  loss_yolo:    0.1119  FOOL:loss_adv_trg_first:    0.9745  loss_adv_trg_second:     0.978 DISTARGET:loss_d_first:    0.0313  loss_d_second:   0.01884
+       1/9     5.52G   0.01021  0.002988  0.000442   0.01364         9       640
+it:284  loss_yolo:     0.124  FOOL:loss_adv_trg_first:     1.191  loss_adv_trg_second:     1.093 DISTARGET:loss_d_first:   0.04063  loss_d_second:   0.01756
+       1/9     5.52G   0.01023  0.002994 0.0004376   0.01366        15       640
+it:285  loss_yolo:     0.125  FOOL:loss_adv_trg_first:    0.9453  loss_adv_trg_second:    0.7836 DISTARGET:loss_d_first:   0.04747  loss_d_second:   0.03985
+       1/9     5.52G   0.01023  0.003022 0.0004334   0.01368        18       640
+it:286  loss_yolo:   0.09049  FOOL:loss_adv_trg_first:     0.711  loss_adv_trg_second:    0.6188 DISTARGET:loss_d_first:   0.08257  loss_d_second:   0.06102
+       1/9     5.52G    0.0102  0.003026 0.0004299   0.01366        18       640
+it:287  loss_yolo:    0.0972  FOOL:loss_adv_trg_first:    0.8797  loss_adv_trg_second:    0.7738 DISTARGET:loss_d_first:   0.04574  loss_d_second:   0.05585
+       1/9     5.52G   0.01019  0.003021 0.0004269   0.01364        14       640
+it:288  loss_yolo:   0.08086  FOOL:loss_adv_trg_first:    0.8831  loss_adv_trg_second:    0.7337 DISTARGET:loss_d_first:   0.03463  loss_d_second:   0.02652
+       1/9     5.52G   0.01017  0.003014  0.000423    0.0136        13       640
+it:289  loss_yolo:    0.1413  FOOL:loss_adv_trg_first:    0.4358  loss_adv_trg_second:    0.3305 DISTARGET:loss_d_first:   0.09847  loss_d_second:    0.1186
+       1/9     5.52G   0.01016   0.00302  0.000462   0.01365        18       640
+it:290  loss_yolo:    0.1167  FOOL:loss_adv_trg_first:    0.6651  loss_adv_trg_second:    0.5391 DISTARGET:loss_d_first:   0.03596  loss_d_second:   0.06203
+       1/9     5.52G   0.01018  0.003015 0.0004577   0.01366        11       640
+it:291  loss_yolo:     0.111  FOOL:loss_adv_trg_first:    0.7133  loss_adv_trg_second:    0.5789 DISTARGET:loss_d_first:   0.04722  loss_d_second:   0.05875
+       1/9     5.52G   0.01017  0.003022 0.0004622   0.01366        12       640
+it:292  loss_yolo:    0.1271  FOOL:loss_adv_trg_first:    0.8955  loss_adv_trg_second:    0.5583 DISTARGET:loss_d_first:   0.04259  loss_d_second:    0.1059
+       1/9     5.52G    0.0102  0.003026 0.0004582   0.01368        13       640
+it:293  loss_yolo:    0.1006  FOOL:loss_adv_trg_first:    0.8672  loss_adv_trg_second:    0.5159 DISTARGET:loss_d_first:    0.0905  loss_d_second:    0.1393
+       1/9     5.52G    0.0102   0.00302  0.000454   0.01367        10       640
+it:294  loss_yolo:     0.146  FOOL:loss_adv_trg_first:    0.9871  loss_adv_trg_second:    0.4913 DISTARGET:loss_d_first:   0.03143  loss_d_second:   0.07878
+       1/9     5.52G   0.01023  0.003015 0.0004749   0.01372        12       640
+it:295  loss_yolo:    0.1086  FOOL:loss_adv_trg_first:     0.851  loss_adv_trg_second:    0.8324 DISTARGET:loss_d_first:   0.02066  loss_d_second:    0.0345
+       1/9     5.52G   0.01023  0.003018 0.0004706   0.01372        15       640
+it:296  loss_yolo:    0.1149  FOOL:loss_adv_trg_first:    0.9001  loss_adv_trg_second:    0.6553 DISTARGET:loss_d_first:   0.04453  loss_d_second:   0.04674
+       1/9     5.52G   0.01024  0.003019 0.0004665   0.01372        14       640
+it:297  loss_yolo:    0.1032  FOOL:loss_adv_trg_first:    0.7738  loss_adv_trg_second:    0.6143 DISTARGET:loss_d_first:   0.06508  loss_d_second:   0.06182
+       1/9     5.52G   0.01023  0.003023 0.0004637   0.01371        14       640
+it:298  loss_yolo:    0.1229  FOOL:loss_adv_trg_first:    0.5593  loss_adv_trg_second:      1.14 DISTARGET:loss_d_first:   0.06161  loss_d_second:   0.02741
+       1/9     5.52G   0.01024  0.003029 0.0004625   0.01373        16       640
+it:299  loss_yolo:    0.1229  FOOL:loss_adv_trg_first:    0.7872  loss_adv_trg_second:     1.286 DISTARGET:loss_d_first:   0.02218  loss_d_second:   0.02812
+       1/9     5.52G   0.01025  0.003032 0.0004601   0.01375        15       640
+it:300  loss_yolo:    0.1095  FOOL:loss_adv_trg_first:    0.4182  loss_adv_trg_second:      1.05 DISTARGET:loss_d_first:   0.09144  loss_d_second:   0.05422
+       1/9     5.52G   0.01025  0.003035 0.0004564   0.01375        16       640
+it:301  loss_yolo:   0.07838  FOOL:loss_adv_trg_first:     0.694  loss_adv_trg_second:    0.9412 DISTARGET:loss_d_first:   0.02156  loss_d_second:   0.01546
+       1/9     5.52G   0.01023  0.003025 0.0004525   0.01371        12       640
+it:302  loss_yolo:   0.08924  FOOL:loss_adv_trg_first:    0.9299  loss_adv_trg_second:    0.9141 DISTARGET:loss_d_first:   0.02101  loss_d_second:   0.01141
+       1/9     5.52G   0.01021  0.003028 0.0004487   0.01368        12       640
+it:303  loss_yolo:    0.1042  FOOL:loss_adv_trg_first:    0.6735  loss_adv_trg_second:    0.9201 DISTARGET:loss_d_first:   0.04321  loss_d_second:   0.03212
+       1/9     5.52G    0.0102  0.003025 0.0004475   0.01368        12       640
+it:304  loss_yolo:    0.1027  FOOL:loss_adv_trg_first:    0.6281  loss_adv_trg_second:    0.5699 DISTARGET:loss_d_first:   0.05165  loss_d_second:   0.06269
+       1/9     5.52G    0.0102  0.003023 0.0004496   0.01367        14       640
+it:305  loss_yolo:    0.1071  FOOL:loss_adv_trg_first:    0.7344  loss_adv_trg_second:    0.5249 DISTARGET:loss_d_first:   0.03166  loss_d_second:    0.1086
+       1/9     5.52G   0.01018   0.00304 0.0004461   0.01367        20       640
+it:306  loss_yolo:    0.1031  FOOL:loss_adv_trg_first:    0.6184  loss_adv_trg_second:    0.6413 DISTARGET:loss_d_first:   0.05583  loss_d_second:   0.06402
+       1/9     5.52G   0.01017  0.003043  0.000443   0.01366        17       640
+it:307  loss_yolo:    0.1078  FOOL:loss_adv_trg_first:    0.8007  loss_adv_trg_second:    0.3711 DISTARGET:loss_d_first:    0.0366  loss_d_second:     0.101
+       1/9     5.52G   0.01017  0.003049 0.0004396   0.01366        20       640
+it:308  loss_yolo:   0.09729  FOOL:loss_adv_trg_first:    0.9166  loss_adv_trg_second:    0.5158 DISTARGET:loss_d_first:   0.02818  loss_d_second:   0.09765
+       1/9     5.52G   0.01017  0.003044 0.0004361   0.01365        10       640
+it:309  loss_yolo:    0.1118  FOOL:loss_adv_trg_first:    0.9651  loss_adv_trg_second:    0.6457 DISTARGET:loss_d_first:    0.0253  loss_d_second:   0.05912
+       1/9     5.52G   0.01017  0.003047 0.0004328   0.01365        11       640
+it:310  loss_yolo:    0.1016  FOOL:loss_adv_trg_first:    0.3791  loss_adv_trg_second:    0.7121 DISTARGET:loss_d_first:   0.07454  loss_d_second:   0.01219
+       1/9     5.57G   0.01017  0.003044 0.0004295   0.01364        14       640
+               Class      Images      Labels           P           R      mAP@.5
+                 all         412         412           1           1       0.997       0.917
+
+     Epoch   gpu_mem       box       obj       cls     total    labels  img_size
+  0%|                                                   | 0/197 [00:00<?, ?it/s]
+it:394  loss_yolo:     0.119  FOOL:loss_adv_trg_first:    0.5141  loss_adv_trg_second:    0.5033 DISTARGET:loss_d_first:   0.05266  loss_d_second:    0.1097
+       2/9     5.58G   0.01166  0.002846 0.0003672   0.01488        12       640
+it:395  loss_yolo:    0.1263  FOOL:loss_adv_trg_first:    0.5386  loss_adv_trg_second:    0.6215 DISTARGET:loss_d_first:   0.06607  loss_d_second:   0.08298
+       2/9     5.58G   0.01239  0.002671 0.0002769   0.01533        11       640
+it:396  loss_yolo:   0.09566  FOOL:loss_adv_trg_first:    0.5954  loss_adv_trg_second:     0.536 DISTARGET:loss_d_first:   0.05852  loss_d_second:   0.04879
+       2/9     5.58G   0.01142  0.002582 0.0002085   0.01421        10       640
+it:397  loss_yolo:    0.1037  FOOL:loss_adv_trg_first:    0.8806  loss_adv_trg_second:    0.6153 DISTARGET:loss_d_first:   0.02057  loss_d_second:   0.05845
+       2/9     5.58G   0.01111  0.002609 0.0001774   0.01389        12       640
+it:398  loss_yolo:    0.1331  FOOL:loss_adv_trg_first:    0.5458  loss_adv_trg_second:    0.8052 DISTARGET:loss_d_first:    0.0693  loss_d_second:   0.02042
+       2/9     5.58G   0.01143  0.002789 0.0002213   0.01444        14       640
+it:399  loss_yolo:    0.1173  FOOL:loss_adv_trg_first:    0.6978  loss_adv_trg_second:    0.7423 DISTARGET:loss_d_first:    0.0266  loss_d_second:   0.05338
+       2/9     5.58G   0.01133  0.002956 0.0001946   0.01448        18       640
+it:400  loss_yolo:   0.08182  FOOL:loss_adv_trg_first:    0.7457  loss_adv_trg_second:    0.5914 DISTARGET:loss_d_first:   0.04591  loss_d_second:   0.05407
+       2/9     5.58G   0.01079  0.002908 0.0001744   0.01387         9       640
+it:401  loss_yolo:    0.1167  FOOL:loss_adv_trg_first:     1.004  loss_adv_trg_second:     1.346 DISTARGET:loss_d_first:   0.03122  loss_d_second:   0.04374
+       2/9     5.58G   0.01074  0.003059 0.0001586   0.01396        13       640
+it:402  loss_yolo:    0.1398  FOOL:loss_adv_trg_first:     1.128  loss_adv_trg_second:     1.263 DISTARGET:loss_d_first:   0.06822  loss_d_second:   0.04181
+       2/9     5.58G   0.01102  0.003183 0.0001476   0.01435        15       640
+it:403  loss_yolo:    0.1243  FOOL:loss_adv_trg_first:    0.7679  loss_adv_trg_second:     1.039 DISTARGET:loss_d_first:   0.04069  loss_d_second:   0.02188
+       2/9     5.58G   0.01116  0.003172 0.0001384   0.01447        13       640
+it:404  loss_yolo:    0.1086  FOOL:loss_adv_trg_first:     0.745  loss_adv_trg_second:    0.8966 DISTARGET:loss_d_first:   0.03641  loss_d_second:   0.02116
+       2/9     5.58G   0.01106  0.003195 0.0001324   0.01439        10       640
+it:405  loss_yolo:    0.1178  FOOL:loss_adv_trg_first:    0.5705  loss_adv_trg_second:    0.7219 DISTARGET:loss_d_first:   0.07104  loss_d_second:   0.03046
+       2/9     5.58G   0.01106  0.003231 0.0001275   0.01442        14       640
+it:406  loss_yolo:    0.1397  FOOL:loss_adv_trg_first:    0.4323  loss_adv_trg_second:    0.4202 DISTARGET:loss_d_first:    0.1114  loss_d_second:    0.1085
+       2/9     5.58G   0.01114  0.003297 0.0002161   0.01465        13       640
+it:407  loss_yolo:    0.1336  FOOL:loss_adv_trg_first:    0.4482  loss_adv_trg_second:    0.4151 DISTARGET:loss_d_first:   0.07828  loss_d_second:   0.08973
+       2/9     5.58G   0.01135  0.003246 0.0002075    0.0148         9       640
+it:408  loss_yolo:    0.1149  FOOL:loss_adv_trg_first:    0.5906  loss_adv_trg_second:    0.4754 DISTARGET:loss_d_first:    0.1032  loss_d_second:   0.08632
+       2/9     5.58G   0.01137  0.003199 0.0001983   0.01477        13       640
+it:409  loss_yolo:    0.1193  FOOL:loss_adv_trg_first:     1.022  loss_adv_trg_second:     0.391 DISTARGET:loss_d_first:   0.02673  loss_d_second:   0.09087
+       2/9     5.58G   0.01142  0.003158 0.0001965   0.01478        11       640
+it:410  loss_yolo:    0.0996  FOOL:loss_adv_trg_first:     1.096  loss_adv_trg_second:    0.4178 DISTARGET:loss_d_first:   0.02325  loss_d_second:   0.09803
+       2/9     5.58G   0.01134  0.003115 0.0001892   0.01464        12       640
+it:411  loss_yolo:    0.1161  FOOL:loss_adv_trg_first:    0.9583  loss_adv_trg_second:    0.3378 DISTARGET:loss_d_first:   0.03126  loss_d_second:    0.1029
+       2/9     5.58G   0.01134  0.003106  0.000184   0.01463        12       640
+it:412  loss_yolo:    0.1138  FOOL:loss_adv_trg_first:     1.057  loss_adv_trg_second:    0.3445 DISTARGET:loss_d_first:   0.01471  loss_d_second:    0.1082
+       2/9     5.58G   0.01131  0.003121 0.0001809   0.01461        11       640
+it:413  loss_yolo:    0.2155  FOOL:loss_adv_trg_first:    0.5874  loss_adv_trg_second:    0.5546 DISTARGET:loss_d_first:   0.07416  loss_d_second:   0.08047
+       2/9     5.58G   0.01148  0.003133 0.0006143   0.01523        14       640
+it:414  loss_yolo:    0.1139  FOOL:loss_adv_trg_first:    0.8428  loss_adv_trg_second:    0.8028 DISTARGET:loss_d_first:   0.02605  loss_d_second:   0.01094
+       2/9     5.58G   0.01152  0.003074 0.0005885   0.01518        11       640
+it:415  loss_yolo:    0.1272  FOOL:loss_adv_trg_first:     0.855  loss_adv_trg_second:     0.786 DISTARGET:loss_d_first:   0.03909  loss_d_second:   0.03564
+       2/9     5.58G   0.01157  0.003074 0.0005748   0.01521        14       640
+it:416  loss_yolo:    0.1133  FOOL:loss_adv_trg_first:    0.5845  loss_adv_trg_second:    0.4658 DISTARGET:loss_d_first:   0.05685  loss_d_second:   0.07058
+       2/9     5.58G   0.01158  0.003036 0.0005534   0.01517         9       640
+it:417  loss_yolo:   0.09537  FOOL:loss_adv_trg_first:    0.5158  loss_adv_trg_second:      1.12 DISTARGET:loss_d_first:   0.07479  loss_d_second:   0.02839
+       2/9     5.58G   0.01148  0.003019  0.000533   0.01503        15       640
+it:418  loss_yolo:   0.09625  FOOL:loss_adv_trg_first:    0.4039  loss_adv_trg_second:    0.7152 DISTARGET:loss_d_first:    0.1002  loss_d_second:   0.04748
+       2/9     5.58G   0.01139  0.003005 0.0005139   0.01491        14       640
+it:419  loss_yolo:    0.1128  FOOL:loss_adv_trg_first:    0.4329  loss_adv_trg_second:    0.8373 DISTARGET:loss_d_first:   0.07622  loss_d_second:   0.03374
+       2/9     5.58G   0.01139  0.002966 0.0005308   0.01488        10       640
+it:420  loss_yolo:   0.09432  FOOL:loss_adv_trg_first:    0.6041  loss_adv_trg_second:      1.33 DISTARGET:loss_d_first:   0.06872  loss_d_second:   0.04243
+       2/9     5.58G   0.01134  0.002913 0.0005162   0.01477        11       640
+it:421  loss_yolo:    0.1279  FOOL:loss_adv_trg_first:    0.8204  loss_adv_trg_second:     0.499 DISTARGET:loss_d_first:   0.03975  loss_d_second:   0.07589
+       2/9     5.58G   0.01136  0.002926 0.0005208   0.01481        15       640
+it:422  loss_yolo:    0.1024  FOOL:loss_adv_trg_first:    0.7123  loss_adv_trg_second:    0.6311 DISTARGET:loss_d_first:   0.03272  loss_d_second:   0.03587
+       2/9     5.58G   0.01134    0.0029 0.0005045   0.01474         8       640
+it:423  loss_yolo:    0.1429  FOOL:loss_adv_trg_first:    0.7818  loss_adv_trg_second:    0.5498 DISTARGET:loss_d_first:   0.03505  loss_d_second:   0.09363
+       2/9     5.58G   0.01137  0.002925 0.0005507   0.01485        15       640
+it:424  loss_yolo:    0.1279  FOOL:loss_adv_trg_first:    0.8445  loss_adv_trg_second:    0.4781 DISTARGET:loss_d_first:   0.02735  loss_d_second:   0.06812
+       2/9     5.58G   0.01139  0.002954 0.0005365   0.01488        17       640
+it:425  loss_yolo:    0.1068  FOOL:loss_adv_trg_first:      1.08  loss_adv_trg_second:    0.5686 DISTARGET:loss_d_first:   0.03539  loss_d_second:    0.0737
+       2/9     5.58G   0.01138  0.002936 0.0005214   0.01484        11       640
+it:426  loss_yolo:    0.1065  FOOL:loss_adv_trg_first:     0.862  loss_adv_trg_second:     0.502 DISTARGET:loss_d_first:   0.01798  loss_d_second:   0.07142
+       2/9     5.58G   0.01137  0.002906 0.0005092   0.01479        11       640
+it:427  loss_yolo:    0.1213  FOOL:loss_adv_trg_first:     1.078  loss_adv_trg_second:    0.6706 DISTARGET:loss_d_first:   0.03048  loss_d_second:   0.04205
+       2/9     5.58G   0.01143  0.002876 0.0004978    0.0148         8       640
+it:428  loss_yolo:     0.119  FOOL:loss_adv_trg_first:    0.8348  loss_adv_trg_second:    0.5192 DISTARGET:loss_d_first:   0.02019  loss_d_second:     0.061
+       2/9     5.58G   0.01143  0.002869 0.0005037    0.0148        12       640
+it:429  loss_yolo:    0.0973  FOOL:loss_adv_trg_first:    0.3622  loss_adv_trg_second:    0.5855 DISTARGET:loss_d_first:    0.1712  loss_d_second:     0.124
+       2/9     5.58G   0.01136  0.002876 0.0004922   0.01473        12       640
+it:430  loss_yolo:    0.1137  FOOL:loss_adv_trg_first:    0.2933  loss_adv_trg_second:    0.4528 DISTARGET:loss_d_first:    0.1241  loss_d_second:   0.08305
+       2/9     5.58G   0.01134  0.002894 0.0004806   0.01471        14       640
+it:431  loss_yolo:   0.08671  FOOL:loss_adv_trg_first:    0.3563  loss_adv_trg_second:    0.5431 DISTARGET:loss_d_first:    0.1125  loss_d_second:   0.07301
+       2/9     5.58G   0.01124  0.002901 0.0004696   0.01461        17       640
+it:432  loss_yolo:    0.1157  FOOL:loss_adv_trg_first:    0.4012  loss_adv_trg_second:    0.4075 DISTARGET:loss_d_first:     0.115  loss_d_second:   0.09551
+       2/9     5.58G   0.01121  0.002936 0.0004663   0.01461        16       640
+it:433  loss_yolo:   0.09527  FOOL:loss_adv_trg_first:    0.6868  loss_adv_trg_second:    0.7773 DISTARGET:loss_d_first:   0.04487  loss_d_second:   0.03631
+       2/9     5.58G   0.01115  0.002937  0.000456   0.01454        13       640
+it:434  loss_yolo:    0.1126  FOOL:loss_adv_trg_first:    0.7507  loss_adv_trg_second:    0.6427 DISTARGET:loss_d_first:   0.02266  loss_d_second:   0.03336
+       2/9     5.58G   0.01112  0.002961 0.0004532   0.01453        19       640
+it:435  loss_yolo:    0.1538  FOOL:loss_adv_trg_first:    0.7774  loss_adv_trg_second:    0.8814 DISTARGET:loss_d_first:   0.04926  loss_d_second:   0.02121
+       2/9     5.58G   0.01106  0.002967 0.0006144   0.01464        14       640
+it:436  loss_yolo:   0.09813  FOOL:loss_adv_trg_first:     0.541  loss_adv_trg_second:     0.673 DISTARGET:loss_d_first:   0.05846  loss_d_second:   0.05766
+       2/9     5.58G   0.01102  0.002958 0.0006034   0.01459        11       640
+it:437  loss_yolo:    0.1073  FOOL:loss_adv_trg_first:     1.045  loss_adv_trg_second:    0.8217 DISTARGET:loss_d_first:   0.05205  loss_d_second:   0.05044
+       2/9     5.58G     0.011  0.002971  0.000591   0.01456        12       640
+it:438  loss_yolo:    0.1087  FOOL:loss_adv_trg_first:     1.485  loss_adv_trg_second:      1.16 DISTARGET:loss_d_first:   0.04578  loss_d_second:   0.06911
+       2/9     5.58G   0.01098   0.00298 0.0005795   0.01454        11       640
+it:439  loss_yolo:     0.113  FOOL:loss_adv_trg_first:     1.117  loss_adv_trg_second:    0.6941 DISTARGET:loss_d_first:   0.03228  loss_d_second:   0.03575
+       2/9     5.58G   0.01098  0.002986 0.0005679   0.01453        14       640
+it:440  loss_yolo:   0.09617  FOOL:loss_adv_trg_first:     1.281  loss_adv_trg_second:    0.9823 DISTARGET:loss_d_first:   0.06284  loss_d_second:   0.04263
+       2/9     5.58G   0.01093  0.002983 0.0005586   0.01448        13       640
+it:441  loss_yolo:    0.1078  FOOL:loss_adv_trg_first:     0.431  loss_adv_trg_second:     0.423 DISTARGET:loss_d_first:   0.09636  loss_d_second:    0.1545
+       2/9     5.58G   0.01093  0.002976 0.0005484   0.01445        10       640
+it:442  loss_yolo:    0.1092  FOOL:loss_adv_trg_first:    0.5763  loss_adv_trg_second:    0.4146 DISTARGET:loss_d_first:   0.07954  loss_d_second:    0.1061
+       2/9     5.58G   0.01091  0.002987 0.0005424   0.01444        14       640
+it:443  loss_yolo:    0.1267  FOOL:loss_adv_trg_first:    0.5466  loss_adv_trg_second:    0.3307 DISTARGET:loss_d_first:   0.05063  loss_d_second:    0.1081
+       2/9     5.58G   0.01091  0.002983 0.0005696   0.01447        12       640
+it:444  loss_yolo:    0.1097  FOOL:loss_adv_trg_first:    0.7264  loss_adv_trg_second:    0.6922 DISTARGET:loss_d_first:   0.03945  loss_d_second:   0.06942
+       2/9     5.58G   0.01092  0.002969 0.0005606   0.01445        10       640
+it:445  loss_yolo:    0.1071  FOOL:loss_adv_trg_first:    0.4334  loss_adv_trg_second:     0.628 DISTARGET:loss_d_first:    0.1137  loss_d_second:   0.07971
+       2/9     5.58G    0.0109  0.002971  0.000556   0.01443        17       640
+it:446  loss_yolo:   0.09701  FOOL:loss_adv_trg_first:    0.3765  loss_adv_trg_second:    0.4315 DISTARGET:loss_d_first:     0.109  loss_d_second:   0.08321
+       2/9     5.58G   0.01089  0.002947 0.0005465   0.01439         8       640
+it:447  loss_yolo:    0.1442  FOOL:loss_adv_trg_first:    0.2957  loss_adv_trg_second:    0.2698 DISTARGET:loss_d_first:    0.1233  loss_d_second:    0.1415
+       2/9     5.58G   0.01087  0.002961  0.000619   0.01445        16       640
+it:448  loss_yolo:   0.08366  FOOL:loss_adv_trg_first:    0.2852  loss_adv_trg_second:    0.3771 DISTARGET:loss_d_first:    0.1415  loss_d_second:   0.09648
+       2/9     5.58G   0.01083  0.002941  0.000609   0.01438        10       640
+it:449  loss_yolo:    0.1528  FOOL:loss_adv_trg_first:    0.7548  loss_adv_trg_second:     1.123 DISTARGET:loss_d_first:   0.02717  loss_d_second:   0.02849
+       2/9     5.58G   0.01082  0.002923 0.0007253   0.01447        10       640
+it:450  loss_yolo:    0.1265  FOOL:loss_adv_trg_first:    0.5552  loss_adv_trg_second:    0.5482 DISTARGET:loss_d_first:    0.0947  loss_d_second:   0.08655
+       2/9     5.58G   0.01082  0.002948 0.0007182   0.01449        13       640
+it:451  loss_yolo:    0.1112  FOOL:loss_adv_trg_first:    0.6085  loss_adv_trg_second:    0.7232 DISTARGET:loss_d_first:   0.06302  loss_d_second:   0.04937
+       2/9     5.58G   0.01082  0.002948 0.0007126   0.01448        11       640
+it:452  loss_yolo:    0.1083  FOOL:loss_adv_trg_first:    0.7713  loss_adv_trg_second:    0.8319 DISTARGET:loss_d_first:    0.0357  loss_d_second:    0.0289
+       2/9     5.58G   0.01081  0.002953 0.0007016   0.01446        16       640
+it:453  loss_yolo:     0.101  FOOL:loss_adv_trg_first:    0.9872  loss_adv_trg_second:    0.8601 DISTARGET:loss_d_first:    0.0747  loss_d_second:   0.05543
+       2/9     5.58G    0.0108  0.002943 0.0006908   0.01443        10       640
+it:454  loss_yolo:    0.1132  FOOL:loss_adv_trg_first:    0.8098  loss_adv_trg_second:    0.7581 DISTARGET:loss_d_first:    0.0353  loss_d_second:   0.05982
+       2/9     5.58G   0.01078  0.002958 0.0006895   0.01443        13       640
+it:455  loss_yolo:    0.1129  FOOL:loss_adv_trg_first:    0.8542  loss_adv_trg_second:    0.9286 DISTARGET:loss_d_first:   0.03557  loss_d_second:   0.03341
+       2/9     5.58G   0.01077  0.002969 0.0006802   0.01442        14       640
+it:456  loss_yolo:    0.1067  FOOL:loss_adv_trg_first:     1.148  loss_adv_trg_second:     1.487 DISTARGET:loss_d_first:   0.06966  loss_d_second:   0.08723
+       2/9     5.58G   0.01077   0.00297 0.0006703   0.01441        12       640
+it:457  loss_yolo:   0.09194  FOOL:loss_adv_trg_first:    0.7737  loss_adv_trg_second:    0.4545 DISTARGET:loss_d_first:   0.02976  loss_d_second:   0.09371
+       2/9     5.58G   0.01074  0.002957 0.0006606   0.01436         9       640
+it:458  loss_yolo:   0.08699  FOOL:loss_adv_trg_first:    0.7933  loss_adv_trg_second:    0.5264 DISTARGET:loss_d_first:   0.03375  loss_d_second:   0.07464
+       2/9     5.58G   0.01069  0.002967 0.0006514   0.01431        13       640
+it:459  loss_yolo:    0.1071  FOOL:loss_adv_trg_first:    0.9289  loss_adv_trg_second:     0.635 DISTARGET:loss_d_first:   0.03498  loss_d_second:   0.05246
+       2/9     5.58G   0.01068  0.002971 0.0006423   0.01429        14       640
+it:460  loss_yolo:    0.1213  FOOL:loss_adv_trg_first:    0.6607  loss_adv_trg_second:     0.568 DISTARGET:loss_d_first:   0.04057  loss_d_second:   0.07691
+       2/9     5.58G   0.01069  0.002981 0.0006343   0.01431        10       640
+it:461  loss_yolo:    0.1328  FOOL:loss_adv_trg_first:    0.2847  loss_adv_trg_second:    0.2989 DISTARGET:loss_d_first:    0.1492  loss_d_second:    0.2074
+       2/9     5.58G   0.01072  0.002996 0.0006279   0.01434        16       640
+it:462  loss_yolo:    0.1291  FOOL:loss_adv_trg_first:    0.3308  loss_adv_trg_second:    0.2935 DISTARGET:loss_d_first:    0.1433  loss_d_second:    0.1685
+       2/9     5.58G   0.01074  0.003006 0.0006216   0.01437        13       640
+it:463  loss_yolo:    0.2164  FOOL:loss_adv_trg_first:    0.3483  loss_adv_trg_second:    0.3316 DISTARGET:loss_d_first:     0.115  loss_d_second:    0.1614
+       2/9     5.58G   0.01074   0.00301 0.0007944   0.01455        16       640
+it:464  loss_yolo:    0.1167  FOOL:loss_adv_trg_first:    0.4785  loss_adv_trg_second:    0.4531 DISTARGET:loss_d_first:    0.1102  loss_d_second:    0.1168
+       2/9     5.58G   0.01075  0.003012  0.000784   0.01455        16       640
+it:465  loss_yolo:    0.1018  FOOL:loss_adv_trg_first:     0.587  loss_adv_trg_second:    0.6376 DISTARGET:loss_d_first:   0.07049  loss_d_second:   0.07268
+       2/9     5.58G   0.01076  0.002991 0.0007739   0.01452         7       640
+it:466  loss_yolo:     0.107  FOOL:loss_adv_trg_first:    0.4328  loss_adv_trg_second:    0.4961 DISTARGET:loss_d_first:   0.08382  loss_d_second:   0.05355
+       2/9     5.58G   0.01073  0.003009 0.0007642   0.01451        17       640
+it:467  loss_yolo:    0.1202  FOOL:loss_adv_trg_first:    0.6831  loss_adv_trg_second:    0.8386 DISTARGET:loss_d_first:   0.06368  loss_d_second:   0.05285
+       2/9     5.58G   0.01074  0.003018 0.0007563   0.01451        12       640
+it:468  loss_yolo:    0.1244  FOOL:loss_adv_trg_first:    0.4864  loss_adv_trg_second:    0.6812 DISTARGET:loss_d_first:    0.1039  loss_d_second:   0.06589
+       2/9     5.58G   0.01075  0.003026 0.0007469   0.01453        13       640
+it:469  loss_yolo:    0.1031  FOOL:loss_adv_trg_first:    0.8363  loss_adv_trg_second:    0.9366 DISTARGET:loss_d_first:    0.0235  loss_d_second:   0.02571
+       2/9     5.58G   0.01075  0.003019 0.0007378   0.01451        13       640
+it:470  loss_yolo:    0.1143  FOOL:loss_adv_trg_first:     0.684  loss_adv_trg_second:    0.7995 DISTARGET:loss_d_first:   0.05582  loss_d_second:   0.05145
+       2/9     5.58G   0.01074   0.00302 0.0007408    0.0145        12       640
+it:471  loss_yolo:    0.1056  FOOL:loss_adv_trg_first:    0.9568  loss_adv_trg_second:    0.9491 DISTARGET:loss_d_first:   0.02738  loss_d_second:    0.0311
+       2/9     5.58G   0.01074  0.003014 0.0007321   0.01449        10       640
+it:472  loss_yolo:    0.1134  FOOL:loss_adv_trg_first:    0.7727  loss_adv_trg_second:    0.8305 DISTARGET:loss_d_first:   0.02994  loss_d_second:   0.03218
+       2/9     5.58G   0.01075  0.003006 0.0007234   0.01448         9       640
+it:473  loss_yolo:    0.1236  FOOL:loss_adv_trg_first:    0.9574  loss_adv_trg_second:     0.932 DISTARGET:loss_d_first:   0.02533  loss_d_second:   0.03754
+       2/9     5.58G   0.01076  0.003017 0.0007194   0.01449        15       640
+it:474  loss_yolo:   0.09124  FOOL:loss_adv_trg_first:    0.8543  loss_adv_trg_second:    0.6707 DISTARGET:loss_d_first:   0.01268  loss_d_second:   0.02958
+       2/9     5.58G   0.01074  0.003004 0.0007126   0.01446        12       640
+it:475  loss_yolo:    0.1229  FOOL:loss_adv_trg_first:    0.8331  loss_adv_trg_second:    0.6284 DISTARGET:loss_d_first:   0.03113  loss_d_second:   0.05761
+       2/9     5.58G   0.01074  0.003002 0.0007265   0.01447        13       640
+it:476  loss_yolo:    0.1139  FOOL:loss_adv_trg_first:     0.687  loss_adv_trg_second:     0.652 DISTARGET:loss_d_first:   0.02878  loss_d_second:   0.03105
+       2/9     5.58G   0.01073  0.002997  0.000737   0.01446        17       640
+it:477  loss_yolo:    0.1149  FOOL:loss_adv_trg_first:     0.781  loss_adv_trg_second:    0.4381 DISTARGET:loss_d_first:    0.0461  loss_d_second:    0.1043
+       2/9     5.58G   0.01073  0.003001 0.0007289   0.01446        11       640
+it:478  loss_yolo:    0.1225  FOOL:loss_adv_trg_first:    0.4013  loss_adv_trg_second:    0.2106 DISTARGET:loss_d_first:   0.08551  loss_d_second:    0.1777
+       2/9     5.58G   0.01076  0.002995 0.0007209   0.01447         9       640
+it:479  loss_yolo:    0.1226  FOOL:loss_adv_trg_first:    0.6216  loss_adv_trg_second:    0.3132 DISTARGET:loss_d_first:   0.05226  loss_d_second:    0.1318
+       2/9     5.58G   0.01076  0.003007 0.0007134   0.01448        15       640
+it:480  loss_yolo:    0.1319  FOOL:loss_adv_trg_first:    0.7954  loss_adv_trg_second:     0.611 DISTARGET:loss_d_first:   0.03424  loss_d_second:   0.05564
+       2/9     5.58G   0.01077  0.003029 0.0007061   0.01451        15       640
+it:481  loss_yolo:   0.08583  FOOL:loss_adv_trg_first:    0.5341  loss_adv_trg_second:    0.3425 DISTARGET:loss_d_first:   0.05398  loss_d_second:    0.1233
+       2/9     5.58G   0.01074  0.003021  0.000704   0.01446         8       640
+it:482  loss_yolo:   0.06977  FOOL:loss_adv_trg_first:    0.4855  loss_adv_trg_second:    0.5117 DISTARGET:loss_d_first:   0.06875  loss_d_second:   0.09401
+       2/9     5.58G    0.0107  0.003001 0.0006966    0.0144         7       640
+it:483  loss_yolo:   0.09569  FOOL:loss_adv_trg_first:      0.56  loss_adv_trg_second:    0.4125 DISTARGET:loss_d_first:   0.04789  loss_d_second:    0.1058
+       2/9     5.58G   0.01069  0.002997 0.0006893   0.01437        14       640
+it:484  loss_yolo:    0.1033  FOOL:loss_adv_trg_first:    0.7327  loss_adv_trg_second:    0.4598 DISTARGET:loss_d_first:   0.01897  loss_d_second:   0.07462
+       2/9     5.58G   0.01068  0.002995 0.0006824   0.01436        13       640
+it:485  loss_yolo:    0.1371  FOOL:loss_adv_trg_first:    0.7427  loss_adv_trg_second:     0.748 DISTARGET:loss_d_first:   0.02264  loss_d_second:   0.02922
+       2/9     5.58G   0.01069  0.003007 0.0006872   0.01439        17       640
+it:486  loss_yolo:   0.09403  FOOL:loss_adv_trg_first:    0.7251  loss_adv_trg_second:    0.6492 DISTARGET:loss_d_first:   0.02341  loss_d_second:   0.03463
+       2/9     5.58G   0.01067  0.003005 0.0006833   0.01436        11       640
+it:487  loss_yolo:     0.113  FOOL:loss_adv_trg_first:    0.5606  loss_adv_trg_second:    0.6403 DISTARGET:loss_d_first:    0.0464  loss_d_second:   0.03333
+       2/9     5.58G   0.01066  0.003015 0.0006766   0.01436        16       640
+it:488  loss_yolo:    0.1095  FOOL:loss_adv_trg_first:    0.7044  loss_adv_trg_second:    0.6075 DISTARGET:loss_d_first:   0.03356  loss_d_second:   0.05601
+       2/9     5.58G   0.01066   0.00302 0.0006702   0.01435        14       640
+it:489  loss_yolo:   0.09439  FOOL:loss_adv_trg_first:    0.7513  loss_adv_trg_second:    0.7804 DISTARGET:loss_d_first:   0.02205  loss_d_second:   0.01106
+       2/9     5.58G   0.01064  0.003014 0.0006638   0.01432        12       640
+it:490  loss_yolo:    0.1211  FOOL:loss_adv_trg_first:    0.9604  loss_adv_trg_second:    0.7862 DISTARGET:loss_d_first:   0.01369  loss_d_second:   0.03294
+       2/9     5.58G   0.01065  0.003017 0.0006581   0.01433        12       640
+it:491  loss_yolo:    0.1085  FOOL:loss_adv_trg_first:    0.7663  loss_adv_trg_second:    0.8893 DISTARGET:loss_d_first:   0.04233  loss_d_second:   0.04272
+       2/9     5.58G   0.01066  0.003012 0.0006523   0.01432        10       640
+it:492  loss_yolo:    0.1194  FOOL:loss_adv_trg_first:    0.8172  loss_adv_trg_second:    0.7544 DISTARGET:loss_d_first:   0.04726  loss_d_second:   0.01957
+       2/9     5.58G   0.01067  0.003009 0.0006462   0.01433        10       640
+it:493  loss_yolo:    0.1168  FOOL:loss_adv_trg_first:    0.8499  loss_adv_trg_second:    0.7012 DISTARGET:loss_d_first:    0.0485  loss_d_second:   0.05908
+       2/9     5.58G   0.01067  0.003025 0.0006404   0.01433        15       640
+it:494  loss_yolo:    0.1039  FOOL:loss_adv_trg_first:    0.8551  loss_adv_trg_second:    0.3414 DISTARGET:loss_d_first:   0.03976  loss_d_second:     0.116
+       2/9     5.58G   0.01066  0.003018 0.0006348   0.01432        10       640
+it:495  loss_yolo:    0.1089  FOOL:loss_adv_trg_first:    0.5586  loss_adv_trg_second:    0.3963 DISTARGET:loss_d_first:   0.06501  loss_d_second:    0.1029
+       2/9     5.58G   0.01066   0.00302 0.0006294   0.01431        15       640
+it:496  loss_yolo:    0.0889  FOOL:loss_adv_trg_first:    0.8433  loss_adv_trg_second:    0.4235 DISTARGET:loss_d_first:   0.04285  loss_d_second:    0.1167
+       2/9     5.58G   0.01065  0.003006 0.0006238   0.01428        11       640
+it:497  loss_yolo:    0.1013  FOOL:loss_adv_trg_first:    0.5445  loss_adv_trg_second:    0.6085 DISTARGET:loss_d_first:   0.07282  loss_d_second:    0.1149
+       2/9     5.58G   0.01064   0.00301 0.0006186   0.01426        19       640
+it:498  loss_yolo:   0.08741  FOOL:loss_adv_trg_first:     0.512  loss_adv_trg_second:    0.4114 DISTARGET:loss_d_first:    0.1036  loss_d_second:    0.1551
+       2/9     5.58G   0.01062  0.003003 0.0006136   0.01423        10       640
+it:499  loss_yolo:   0.09365  FOOL:loss_adv_trg_first:    0.3615  loss_adv_trg_second:    0.3545 DISTARGET:loss_d_first:    0.1133  loss_d_second:     0.118
+       2/9     5.58G   0.01061  0.002987 0.0006083   0.01421         6       640
+it:500  loss_yolo:    0.1173  FOOL:loss_adv_trg_first:    0.6016  loss_adv_trg_second:    0.5749 DISTARGET:loss_d_first:   0.05165  loss_d_second:   0.05697
+       2/9     5.58G   0.01062  0.002982 0.0006141   0.01421        11       640
+it:501  loss_yolo:    0.1497  FOOL:loss_adv_trg_first:    0.8007  loss_adv_trg_second:    0.4743 DISTARGET:loss_d_first:   0.05595  loss_d_second:   0.09204
+       2/9     5.58G    0.0106  0.002984  0.000667   0.01425        10       640
+it:502  loss_yolo:   0.07908  FOOL:loss_adv_trg_first:     1.021  loss_adv_trg_second:    0.6661 DISTARGET:loss_d_first:   0.03599  loss_d_second:   0.08013
+       2/9     5.58G   0.01058  0.002975 0.0006625   0.01421         7       640
+it:503  loss_yolo:   0.09975  FOOL:loss_adv_trg_first:    0.8811  loss_adv_trg_second:     0.423 DISTARGET:loss_d_first:   0.03046  loss_d_second:   0.08904
+       2/9     5.58G   0.01057  0.002973 0.0006572    0.0142        13       640
+it:504  loss_yolo:    0.1021  FOOL:loss_adv_trg_first:     1.118  loss_adv_trg_second:    0.6817 DISTARGET:loss_d_first:    0.0276  loss_d_second:   0.03742
+       2/9     5.58G   0.01056  0.002975  0.000652   0.01419         9       640
+it:505  loss_yolo:    0.1094  FOOL:loss_adv_trg_first:    0.9168  loss_adv_trg_second:    0.4827 DISTARGET:loss_d_first:   0.03815  loss_d_second:   0.07756
+       2/9     5.58G   0.01055   0.00298 0.0006496   0.01418        11       640
+it:506  loss_yolo:    0.1349  FOOL:loss_adv_trg_first:    0.5454  loss_adv_trg_second:    0.8816 DISTARGET:loss_d_first:   0.06123  loss_d_second:   0.03115
+       2/9     5.58G   0.01057  0.002984 0.0006496    0.0142        15       640
+it:507  loss_yolo:    0.1148  FOOL:loss_adv_trg_first:    0.7128  loss_adv_trg_second:    0.9692 DISTARGET:loss_d_first:   0.01349  loss_d_second: 0.0001204
+       2/9     5.58G   0.01058  0.002979  0.000652   0.01421        10       640
+               Class      Images      Labels           P           R      mAP@.5
+                 all         412         412       0.999           1       0.996       0.911
+
+     Epoch   gpu_mem       box       obj       cls     total    labels  img_size
+  0%|                                                   | 0/197 [00:00<?, ?it/s]
+it:591  loss_yolo:    0.1367  FOOL:loss_adv_trg_first:    0.7478  loss_adv_trg_second:     1.024 DISTARGET:loss_d_first:   0.04155  loss_d_second:   0.03729
+       3/9     5.58G   0.01271  0.003544 0.0008304   0.01709        14       640
+it:592  loss_yolo:    0.1234  FOOL:loss_adv_trg_first:    0.6228  loss_adv_trg_second:    0.8069 DISTARGET:loss_d_first:    0.0339  loss_d_second:   0.01143
+       3/9     5.58G   0.01277  0.002936 0.0005535   0.01626        11       640
+it:593  loss_yolo:    0.1356  FOOL:loss_adv_trg_first:    0.6651  loss_adv_trg_second:    0.7276 DISTARGET:loss_d_first:   0.07179  loss_d_second:   0.03947
+       3/9     5.58G   0.01364  0.002457 0.0003903   0.01649         9       640
+it:594  loss_yolo:    0.1238  FOOL:loss_adv_trg_first:    0.5585  loss_adv_trg_second:    0.6539 DISTARGET:loss_d_first:   0.06255  loss_d_second:   0.03288
+       3/9     5.58G   0.01352  0.002397 0.0003129   0.01623         9       640
+it:595  loss_yolo:    0.1612  FOOL:loss_adv_trg_first:    0.6427  loss_adv_trg_second:    0.7114 DISTARGET:loss_d_first:   0.05131  loss_d_second:    0.0621
+       3/9     5.58G   0.01348  0.002685 0.0008565   0.01702        16       640
+it:596  loss_yolo:   0.09474  FOOL:loss_adv_trg_first:    0.6526  loss_adv_trg_second:    0.5318 DISTARGET:loss_d_first:    0.0459  loss_d_second:   0.07765
+       3/9     5.58G   0.01256  0.002579  0.001017   0.01615         7       640
+it:597  loss_yolo:   0.09256  FOOL:loss_adv_trg_first:    0.3815  loss_adv_trg_second:    0.2508 DISTARGET:loss_d_first:    0.1102  loss_d_second:    0.1622
+       3/9     5.58G   0.01225   0.00236  0.000887    0.0155         4       640
+it:598  loss_yolo:     0.123  FOOL:loss_adv_trg_first:    0.6798  loss_adv_trg_second:    0.5628 DISTARGET:loss_d_first:   0.03002  loss_d_second:   0.03971
+       3/9     5.58G   0.01226  0.002446 0.0007829   0.01548        14       640
+it:599  loss_yolo:     0.116  FOOL:loss_adv_trg_first:    0.6777  loss_adv_trg_second:    0.4172 DISTARGET:loss_d_first:   0.03221  loss_d_second:   0.07995
+       3/9     5.58G   0.01215  0.002525 0.0007038   0.01537        12       640
+it:600  loss_yolo:    0.1013  FOOL:loss_adv_trg_first:     0.503  loss_adv_trg_second:    0.4962 DISTARGET:loss_d_first:   0.07455  loss_d_second:    0.1127
+       3/9     5.58G   0.01199  0.002475  0.000639    0.0151         7       640
+it:601  loss_yolo:   0.09466  FOOL:loss_adv_trg_first:    0.9722  loss_adv_trg_second:    0.3765 DISTARGET:loss_d_first:   0.02416  loss_d_second:    0.0828
+       3/9     5.58G    0.0117  0.002518 0.0005859   0.01481        13       640
+it:602  loss_yolo:   0.09283  FOOL:loss_adv_trg_first:     1.159  loss_adv_trg_second:    0.5681 DISTARGET:loss_d_first:   0.03519  loss_d_second:    0.0931
+       3/9     5.58G   0.01147  0.002514 0.0005575   0.01454        10       640
+it:603  loss_yolo:   0.09814  FOOL:loss_adv_trg_first:    0.8718  loss_adv_trg_second:     0.362 DISTARGET:loss_d_first:   0.03321  loss_d_second:    0.1041
+       3/9     5.58G    0.0114  0.002447 0.0005192   0.01436         9       640
+it:604  loss_yolo:   0.09406  FOOL:loss_adv_trg_first:    0.9031  loss_adv_trg_second:    0.5221 DISTARGET:loss_d_first:   0.01522  loss_d_second:   0.07334
+       3/9     5.58G   0.01126  0.002428 0.0004894   0.01418        10       640
+it:605  loss_yolo:   0.09363  FOOL:loss_adv_trg_first:    0.9889  loss_adv_trg_second:    0.4326 DISTARGET:loss_d_first:   0.03238  loss_d_second:    0.1318
+       3/9     5.58G   0.01113  0.002419 0.0004605   0.01401        10       640
+it:606  loss_yolo:    0.1114  FOOL:loss_adv_trg_first:    0.1819  loss_adv_trg_second:    0.7854 DISTARGET:loss_d_first:    0.1905  loss_d_second:   0.01554
+       3/9     5.58G   0.01114  0.002425  0.000439   0.01401         9       640
+it:607  loss_yolo:    0.1274  FOOL:loss_adv_trg_first:    0.1789  loss_adv_trg_second:    0.7391 DISTARGET:loss_d_first:    0.2255  loss_d_second:   0.04479
+       3/9     5.58G   0.01124  0.002468  0.000417   0.01412        15       640
+it:608  loss_yolo:    0.1098  FOOL:loss_adv_trg_first:     0.282  loss_adv_trg_second:    0.8382 DISTARGET:loss_d_first:    0.1438  loss_d_second:     0.052
+       3/9     5.58G   0.01118  0.002519 0.0003967    0.0141        15       640
+it:609  loss_yolo:   0.07461  FOOL:loss_adv_trg_first:    0.2458  loss_adv_trg_second:    0.7924 DISTARGET:loss_d_first:    0.1601  loss_d_second:    0.0188
+       3/9     5.58G   0.01099  0.002476 0.0003788   0.01385         8       640
+it:610  loss_yolo:    0.1576  FOOL:loss_adv_trg_first:   0.09079  loss_adv_trg_second:    0.5581 DISTARGET:loss_d_first:    0.2856  loss_d_second:    0.1047
+       3/9     5.58G   0.01112  0.002506 0.0005179   0.01414        17       640
+it:611  loss_yolo:   0.09494  FOOL:loss_adv_trg_first:     1.171  loss_adv_trg_second:    0.6135 DISTARGET:loss_d_first:   0.01491  loss_d_second:   0.04241
+       3/9     5.58G     0.011  0.002539 0.0004958   0.01403        15       640
+it:612  loss_yolo:    0.1173  FOOL:loss_adv_trg_first:     0.862  loss_adv_trg_second:    0.4448 DISTARGET:loss_d_first:   0.02059  loss_d_second:   0.08244
+       3/9     5.58G   0.01107  0.002512 0.0004767   0.01406         6       640
+it:613  loss_yolo:    0.1122  FOOL:loss_adv_trg_first:    0.8662  loss_adv_trg_second:    0.8028 DISTARGET:loss_d_first:   0.06854  loss_d_second:   0.05029
+       3/9     5.58G   0.01111  0.002489 0.0004646   0.01406        11       640
+it:614  loss_yolo:    0.1141  FOOL:loss_adv_trg_first:    0.9285  loss_adv_trg_second:    0.6461 DISTARGET:loss_d_first:   0.01814  loss_d_second:   0.03662
+       3/9     5.58G   0.01114  0.002483  0.000447   0.01407         9       640
+it:615  loss_yolo:    0.1181  FOOL:loss_adv_trg_first:    0.8802  loss_adv_trg_second:     0.479 DISTARGET:loss_d_first:   0.02733  loss_d_second:    0.0952
+       3/9     5.58G   0.01112  0.002512 0.0004601    0.0141        17       640
+it:616  loss_yolo:    0.1152  FOOL:loss_adv_trg_first:    0.7776  loss_adv_trg_second:    0.2427 DISTARGET:loss_d_first:   0.03837  loss_d_second:    0.1721
+       3/9     5.58G   0.01112  0.002542 0.0004446   0.01411        14       640
+it:617  loss_yolo:    0.1088  FOOL:loss_adv_trg_first:    0.8141  loss_adv_trg_second:    0.3335 DISTARGET:loss_d_first:   0.02602  loss_d_second:    0.1456
+       3/9     5.58G   0.01111  0.002543 0.0004312   0.01409        13       640
+it:618  loss_yolo:   0.09818  FOOL:loss_adv_trg_first:    0.8593  loss_adv_trg_second:    0.4215 DISTARGET:loss_d_first:   0.02273  loss_d_second:    0.1003
+       3/9     5.58G   0.01105  0.002556 0.0004189   0.01402        13       640
+it:619  loss_yolo:    0.1029  FOOL:loss_adv_trg_first:     1.014  loss_adv_trg_second:    0.4864 DISTARGET:loss_d_first:   0.01746  loss_d_second:   0.09531
+       3/9     5.58G   0.01101   0.00257 0.0004063   0.01398        15       640
+it:620  loss_yolo:    0.1218  FOOL:loss_adv_trg_first:    0.8777  loss_adv_trg_second:    0.6355 DISTARGET:loss_d_first:   0.02812  loss_d_second:   0.09605
+       3/9     5.58G   0.01098  0.002647 0.0003953   0.01402        18       640
+it:621  loss_yolo:   0.09407  FOOL:loss_adv_trg_first:    0.2901  loss_adv_trg_second:    0.6589 DISTARGET:loss_d_first:    0.1335  loss_d_second:   0.03254
+       3/9     5.58G   0.01093  0.002638 0.0003841   0.01395        11       640

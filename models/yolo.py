@@ -4,6 +4,7 @@ import argparse
 import logging
 import sys
 from copy import deepcopy
+import copy
 
 sys.path.append('./')  # to run '$ python *.py' files in subdirectories
 logger = logging.getLogger(__name__)
@@ -21,28 +22,35 @@ except ImportError:
     thop = None
 
 
-class Detect(nn.Module):
+class Detect(nn.Module):########################################yolo的detect模块
     stride = None  # strides computed during build
     export = False  # onnx export
 
     def __init__(self, nc=80, anchors=(), ch=()):  # detection layer
         super(Detect, self).__init__()
-        self.nc = nc  # number of classes
-        self.no = nc + 5  # number of outputs per anchor
-        self.nl = len(anchors)  # number of detection layers
-        self.na = len(anchors[0]) // 2  # number of anchors
+        self.nc = nc  # number of classes#1
+        self.no = nc + 5  # number of outputs per anchor#6
+        self.nl = len(anchors)  # number of detection layers#3
+        self.na = len(anchors[0]) // 2  # number of anchors#3
         self.grid = [torch.zeros(1)] * self.nl  # init grid
         a = torch.tensor(anchors).float().view(self.nl, -1, 2)
-        self.register_buffer('anchors', a)  # shape(nl,na,2)
+        self.register_buffer('anchors', a)  # shape(nl,na,2)#存到受保护的缓冲区（不被训练的参数）
         self.register_buffer('anchor_grid', a.clone().view(self.nl, 1, -1, 1, 1, 2))  # shape(nl,1,na,1,1,2)
         self.m = nn.ModuleList(nn.Conv2d(x, self.no * self.na, 1) for x in ch)  # output conv
 
     def forward(self, x):
         # x = x.copy()  # for profiling
         z = []  # inference output
+        feature = x.copy()
         self.training |= self.export
+#############################################################################################在此处加跨域
         for i in range(self.nl):
-            x[i] = self.m[i](x[i])  # conv#x:[8,320,80,80][8,640,40,40][8,1280,20,20]
+            # feature = list([0,1,2])
+            # feature[0]=x[0]
+            # feature[1]=x[1]
+            # feature[2]=x[2]
+
+            x[i] = self.m[i](x[i])  # conv
             bs, _, ny, nx = x[i].shape  # x(bs,255,20,20) to x(bs,3,20,20,85)
             x[i] = x[i].view(bs, self.na, self.no, ny, nx).permute(0, 1, 3, 4, 2).contiguous()
 
@@ -55,7 +63,7 @@ class Detect(nn.Module):
                 y[..., 2:4] = (y[..., 2:4] * 2) ** 2 * self.anchor_grid[i]  # wh
                 z.append(y.view(bs, -1, self.no))
 
-        return x if self.training else (torch.cat(z, 1), x)
+        return (x,feature) if self.training else (torch.cat(z, 1), x)
 
     @staticmethod
     def _make_grid(nx=20, ny=20):
@@ -90,7 +98,8 @@ class Model(nn.Module):
         m = self.model[-1]  # Detect()
         if isinstance(m, Detect):
             s = 256  # 2x min stride
-            m.stride = torch.tensor([s / x.shape[-2] for x in self.forward(torch.zeros(1, ch, s, s))])  # forward
+            r = self.forward(torch.zeros(1, ch, s, s))
+            m.stride = torch.tensor([s / x.shape[-2] for x in r[0]])  # forward(cyc加了,_)
             m.anchors /= m.stride.view(-1, 1, 1)
             check_anchor_order(m)
             self.stride = m.stride
@@ -137,7 +146,7 @@ class Model(nn.Module):
                 print('%10.1f%10.0f%10.1fms %-40s' % (o, m.np, dt[-1], m.type))
 
             x = m(x)  # run
-            y.append(x if m.i in self.save else None)  # save output
+            y.append(x if m.i in self.save else None)#[4, 6, 10, 14, 17, 20, 23]  # save output
 
         if profile:
             print('%.1fms total' % sum(dt))
@@ -197,12 +206,12 @@ class Model(nn.Module):
     def info(self, verbose=False, img_size=640):  # print model information
         model_info(self, verbose, img_size)
 
-##########################################################################################产生网路架构
+##########################################################################################产生网络架构
 def parse_model(d, ch):  # model_dict, input_channels(3)
     logger.info('\n%3s%18s%3s%10s  %-40s%-30s' % ('', 'from', 'n', 'params', 'module', 'arguments'))
     anchors, nc, gd, gw = d['anchors'], d['nc'], d['depth_multiple'], d['width_multiple']
-    na = (len(anchors[0]) // 2) if isinstance(anchors, list) else anchors  # number of anchors
-    no = na * (nc + 5)  # number of outputs = anchors * (classes + 5)
+    na = (len(anchors[0]) // 2) if isinstance(anchors, list) else anchors  # number of anchors#3
+    no = na * (nc + 5)  # number of outputs = anchors * (classes + 5)#18
 
     layers, save, c2 = [], [], ch[-1]  # layers, savelist, ch out
     for i, (f, n, m, args) in enumerate(d['backbone'] + d['head']):  # from, number, module, args
@@ -239,10 +248,10 @@ def parse_model(d, ch):  # model_dict, input_channels(3)
         else:
             c2 = ch[f]
 
-        m_ = nn.Sequential(*[m(*args) for _ in range(n)]) if n > 1 else m(*args)  # module
+        m_ = nn.Sequential(*[m(*args) for _ in range(n)]) if n > 1 else m(*args)  # module(detect_layer)
         t = str(m)[8:-2].replace('__main__.', '')  # module type
         np = sum([x.numel() for x in m_.parameters()])  # number params
-        m_.i, m_.f, m_.type, m_.np = i, f, t, np  # attach index, 'from' index, type, number params
+        m_.i, m_.f, m_.type, m_.np = i, f, t, np  # attach index, 'from' index, type, number params#i=24,f=[17,20,23],type='models.yolo.Detect'
         logger.info('%3s%18s%3s%10.0f  %-40s%-30s' % (i, f, n, np, t, args))  # print
         save.extend(x % i for x in ([f] if isinstance(f, int) else f) if x != -1)  # append to savelist
         layers.append(m_)

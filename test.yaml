@@ -1,0 +1,3 @@
+val: ./data/dell/images/val_alldata_simple
+nc: 2 
+ names: ['cancel','limit']
