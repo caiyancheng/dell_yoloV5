@@ -27,13 +27,13 @@ parser.add_argument(
     '-i',
     '--input_dir',
     type=str,
-    default= '',
+    default='',
     help='path to input image folder')
 parser.add_argument(
     '-o',
     '--output_dir',
     type=str,
-    default= '',
+    default='',
     help='output txt directory')
 
 
@@ -68,9 +68,10 @@ def _main(args):
 
     sys.path.append(model_path)
     import interface
-    t=interface.yolo_model()
-    t.init_predict(input_dir,output_dir)
+    t = interface.yolo_model()
+    t.init_predict(input_dir, output_dir)
     inference(t)
+    t.output()
 
 
 if __name__ == '__main__':
@@ -78,6 +79,6 @@ if __name__ == '__main__':
     _main(args=args)
 
 """
-python inference.py --model_path=xxx --input_dir=xxx --output_dir=xxx 
-python inference.py --model_path=./dell_yoloV5/ --input_dir=./dell_yoloV5/data/dell/images/val_simple --output_dir=./
+python inference.py --model_path=xxx --input_dir=xxx --output_dir=xxx like:
+python inference.py --model_path=path/dell_yoloV5 --input_dir=image_dir_path --output_dir=output_path
 """

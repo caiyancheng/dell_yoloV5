@@ -54,7 +54,7 @@ def test(data,
 
         # Load model
         model = attempt_load(weights, map_location=device)  # load FP32 model
-        gs = max(int(model.stride.max()), 32)  # grid size (max stride)
+        gs = max(int(model.stride.max()), 32)  # grid size (max stride)#32
         imgsz = check_img_size(imgsz, s=gs)  # check img_size
 
         # Multi-GPU disabled, incompatible with .half() https://github.com/ultralytics/yolov5/issues/99
@@ -75,7 +75,7 @@ def test(data,
     check_dataset(data)  # check
     nc = 1 if single_cls else int(data['nc'])  # number of classes
     iouv = torch.linspace(0.5, 0.95, 10).to(device)  # iou vector for mAP@0.5:0.95
-    niou = iouv.numel()
+    niou = iouv.numel()#10
 
     # Logging
     log_imgs = 0
@@ -292,10 +292,12 @@ def test(data,
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='test.py')
     # parser.add_argument('--weights', nargs='+', type=str, default='./runs/dell_train_final/exp17/weights/best.pt', help='model.pt path(s)')
-    parser.add_argument('--weights', nargs='+', type=str, default='./runs/train_crossdomain/exp17/weights/best.pt',#7
+    # parser.add_argument('--weights', nargs='+', type=str, default='./runs/train_crossdomain/exp17/weights/best.pt',#7
+    #                     help='model.pt path(s)')
+    parser.add_argument('--weights', nargs='+', type=str, default='./runs/train_crossdomain/exp26/weights/best.pt',  # 7
                         help='model.pt path(s)')
     parser.add_argument('--data', type=str, default='data/dell.yaml', help='*.data path')
-    parser.add_argument('--batch-size', type=int, default=48, help='size of each image batch')
+    parser.add_argument('--batch-size', type=int, default=4, help='size of each image batch')
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.001, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.6, help='IOU threshold for NMS')
@@ -304,7 +306,7 @@ if __name__ == '__main__':
     parser.add_argument('--single-cls', action='store_true', help='treat as single-class dataset')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--verbose', action='store_true', help='report mAP by class')
-    parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
+    parser.add_argument('--save-txt', action='store_true',default=True, help='save results to *.txt')
     parser.add_argument('--save-hybrid', action='store_true', help='save label+prediction hybrid results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
     parser.add_argument('--save-json', action='store_true', help='save a cocoapi-compatible JSON results file')

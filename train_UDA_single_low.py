@@ -48,7 +48,7 @@ TRAIN_LAMBADA_ADV_FIRST = 0.1
 TRAIN_LAMBADA_ADV_SECOND = 0.1
 TRAIN_LAMBADA_ADV_THIRD = 0.1
 
-TRAIN_LAYER=3
+TRAIN_LAYER=2
 ADD=0
 
 
@@ -735,7 +735,7 @@ if __name__ == '__main__':
     parser.add_argument('--cfg', type=str, default='', help='model.yaml path')#参考.yaml文件
     parser.add_argument('--data', type=str, default='data/dell.yaml', help='data.yaml path')#数据集目录
     parser.add_argument('--hyp', type=str, default='data/hyp.scratch.yaml', help='hyperparameters path')#超参们
-    parser.add_argument('--epochs', type=int, default=4)#几个epoch?
+    parser.add_argument('--epochs', type=int, default=8)#几个epoch?
     parser.add_argument('--batch-size', type=int, default=8, help='total batch size for all GPUs')#batchsize
     parser.add_argument('--img-size', nargs='+', type=int, default=[640, 640], help='[train, test] image sizes')#切割
     parser.add_argument('--rect',action='store_true',default=False, help='rectangular training')
