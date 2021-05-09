@@ -1,24 +1,16 @@
-ssh://root@10.154.63.42:38301/usr/local/miniconda3/envs/yolov5/bin/python -u /remote-home/source/42/cyc19307140030/dellyolo/test.py
-Namespace(augment=False, batch_size=48, conf_thres=0.001, data='data/dell.yaml', device='', exist_ok=False, img_size=640, iou_thres=0.6, name='exp', project='runs/test', save_conf=False, save_hybrid=False, save_json=False, save_txt=False, single_cls=False, task='val', verbose=False, weights='./runs/dell_train/exp7/weights/best.pt')
+(yoloV5) root@4c3413bf8149:/remote-home/source/42/cyc19307140030/dellyolo# python test.py
+Namespace(augment=False, batch_size=48, conf_thres=0.001, data='data/dell.yaml', device='', exist_ok=False, img_size=640, iou_thres=0.6, name='exp', project='runs/test', save_conf=False, save_hybrid=False, save_json=False, save_txt=False, single_cls=False, task='val', verbose=False, weights='./runs/dell_train_final/exp17/weights/best.pt')
 YOLOv5 🚀 2021-4-7 torch 1.7.1 CUDA:0 (GeForce RTX 2080 Ti, 10989.4375MB)
                               CUDA:1 (GeForce RTX 2080 Ti, 10989.4375MB)
+                              CUDA:2 (GeForce RTX 2080 Ti, 10989.4375MB)
+                              CUDA:3 (GeForce RTX 2080 Ti, 10989.4375MB)
 
 Fusing layers... 
 Model Summary: 476 layers, 87205423 parameters, 0 gradients, 217.1 GFLOPS
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 4
-               Class      Images      Labels           P           R      mAP@.5
-                 all         412         412           1           1       0.997       0.902
-              cancel         412         226       0.999           1       0.997       0.893
-               limit         412         186           1           1       0.997       0.912
-Speed: 8.5/1.6/10.1 ms inference/NMS/total per 640x640 image at batch-size 48
-Results saved to runs/test/exp16
-
-Process finished with exit code 0
+               Class      Images      Labels           P           R      mAP@.5  mAP@.5:.95: 100%|███████████████████████████████| 9/9 [00:06<00:00,  1.45it/s]
+val: Scanning 'data/dell/labels/val_alldata_simple.cache' images and labels... 412 found, 0 missing, 0 empty, 0 corrupted: 100%|██████| 412/412 [00:07<?, ?it/s]
+                 all         412         412       0.999           1       0.997       0.925
+              cancel         412         226       0.998           1       0.997       0.919
+               limit         412         186           1           1       0.997       0.931
+Speed: 8.2/1.1/9.3 ms inference/NMS/total per 640x640 image at batch-size 48
+Results saved to runs/test/exp33

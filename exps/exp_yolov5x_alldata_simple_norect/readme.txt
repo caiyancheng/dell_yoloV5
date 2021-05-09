@@ -1,1 +1,0 @@
-this exp based on yoloV5x 640,640 norect, simple+all_domain_data
